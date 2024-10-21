@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppGarcomSys.Views.Login"
+             Title="Login" 
+             BackgroundColor="White">
+
+    <VerticalStackLayout>
+        <Image Margin="0,100,0,0" Source="abertura.jpg"/>
+
+        <Entry Placeholder="Senha" WidthRequest="300"  HorizontalTextAlignment="Center" x:Name="txtSenha" IsPassword="True" />
+        <HorizontalStackLayout>
+            <CheckBox IsVisible="False" x:Name="CheckBoxDeLembrarSenha" Margin="40,0,0,0"/>
+            <Label IsVisible="False" Text="Lembrar senha" VerticalOptions="Center"/>
+        </HorizontalStackLayout>
+        <Button x:Name="BtnDeEntrar" Clicked="BtnDeEntrar_Clicked" Text="Entrar" HorizontalOptions="Center" WidthRequest="200" />
+
+        <Label Text="Opções do Desenvolvedor" Margin="0,300,0,0" TextColor="Blue" HorizontalOptions="CenterAndExpand" TextDecorations="Underline">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer x:Name="ClickOpcDesenvolvedor" Tapped="ClickOpcDesenvolvedor_Tapped" />
+            </Label.GestureRecognizers>
+        </Label>
+
+    </VerticalStackLayout>  
+</ContentPage>

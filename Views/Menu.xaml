@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppGarcomSys.Views.Menu"
+             Title="Menu"
+             BackgroundColor="#F2C12E"
+             >
+    <VerticalStackLayout Spacing="6">
+        <Label 
+            Text="Menu"
+            FontSize="32"
+            FontFamily="OpenSansSemibold"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+
+        <Border Background="#024959" Padding="10,10,10,10">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="10" />
+            </Border.StrokeShape>
+
+            <Label Text="Inicio" FontSize="20" TextColor="White">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer x:Name="ClickLblMainPage" Tapped="ClickLblMainPage_Tapped" />
+                </Label.GestureRecognizers>
+            </Label>
+        </Border>
+
+
+        <Border Background="#024959" Padding="10,10,10,10">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="10" />
+                <!-- Define o arredondamento das bordas -->
+            </Border.StrokeShape>
+
+            <Border.GestureRecognizers>
+                <TapGestureRecognizer x:Name="ClickIniciarPedido"  Tapped="ClickIniciarPedido_Tapped"/>
+            </Border.GestureRecognizers>
+            <Label Text="Iniciar Pedido" FontSize="20" TextColor="White"/>
+        </Border>
+
+        <Border Background="#024959" Padding="10,10,10,10">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="10" />
+                <!-- Define o arredondamento das bordas -->
+            </Border.StrokeShape>
+
+            <Border.GestureRecognizers>
+              
+            </Border.GestureRecognizers>
+            <Label Text="Enviar Aviso" FontSize="20" TextColor="White"/>
+        </Border>
+
+        <Border Background="#024959" Padding="10,10,10,10">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="10" />
+                <!-- Define o arredondamento das bordas -->
+            </Border.StrokeShape>
+
+            <Border.GestureRecognizers>
+
+            </Border.GestureRecognizers>
+            <Label Text="Ver Pedidos" FontSize="20" TextColor="White"/>
+        </Border>
+
+
+ 
+
+        <Border Background="#024959" Padding="10,10,10,10">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="10" />
+            </Border.StrokeShape>
+
+            <Label Text="Configurações" FontSize="20" TextColor="White">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer  x:Name="ClickIrConfiguracoes" Tapped="ClickIrConfiguracoes_Tapped" />
+                </Label.GestureRecognizers>
+            </Label>
+        </Border>
+        
+        
+        <Border Background="#024959" Padding="10,10,10,10">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="10" />
+            </Border.StrokeShape>
+
+            <Label Text="Sair" FontSize="20" TextColor="White">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer x:Name="BtnSair" Tapped="BtnSair_Tapped" />
+                </Label.GestureRecognizers>
+            </Label>
+        </Border>
+
+
+        <Image Margin="0,290,0,0" Source="abertura.jpg" VerticalOptions="Start"/>
+    </VerticalStackLayout>
+
+
+</ContentPage>

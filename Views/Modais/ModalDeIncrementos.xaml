@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppGarcomSys.Views.Modais.ModalDeIncrementos"
+             Title="Incrementos">
+    <ScrollView>
+        <VerticalStackLayout>
+
+            <Grid x:Name="GridDeProdutos" RowSpacing="10" ColumnDefinitions="5*,5*" Margin="10" ColumnSpacing="5" Padding="5">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+
+            </Grid>
+
+            <Button HorizontalOptions="FillAndExpand" VerticalOptions="End"  Margin="0,0,0,0" x:Name="BtnConcluido" Text="Conclúido"  FontSize="20" BackgroundColor="#20F522" Clicked="BtnConcluido_Clicked"/>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
