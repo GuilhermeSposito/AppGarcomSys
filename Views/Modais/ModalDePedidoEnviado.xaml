@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppGarcomSys.Views.Modais.ModalDePedidoEnviado"
+             Title="Pedido">
+    <VerticalStackLayout BackgroundColor="White">
+
+        <VerticalStackLayout Margin="0,200" IsVisible="False" x:Name="LayoutDePedidoConcluido" BackgroundColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+
+            <Image Source="concluido.png" Margin="50" HeightRequest="150" WidthRequest="150" HorizontalOptions="Center" VerticalOptions="Center" />
+            <Label FontFamily="OpenSansSemibold" TextColor="#15C18B" Text="Pedido enviado com sucesso!" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center" />
+
+              
+        </VerticalStackLayout>
+
+
+        <VerticalStackLayout Margin="0,200" IsVisible="False" x:Name="LayoutDePedidoNaoEnviado" BackgroundColor="White"  HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+
+            <Image Source="naoconcluido.png" HeightRequest="150" WidthRequest="150" HorizontalOptions="Center" VerticalOptions="Center" />
+            <Label FontFamily="OpenSansSemibold" Margin="0,50,0,0" TextColor="#FF4242" Text="Pedido com erro ao ser enviado" FontSize="20"  HorizontalOptions="Center" VerticalOptions="Center" />
+
+        </VerticalStackLayout>
+
+
+        <ActivityIndicator Margin="0,300" x:Name="CarregandoIndicador" IsRunning="true" />
+
+
+        <VerticalStackLayout.GestureRecognizers>
+            <TapGestureRecognizer x:Name="TapDePedidoEnviado" Tapped="TapDePedidoEnviado_Tapped" />
+        </VerticalStackLayout.GestureRecognizers>
+    </VerticalStackLayout>
+</ContentPage>

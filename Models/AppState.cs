@@ -24,6 +24,7 @@ public static class AppState
     public static Garcom? GarconLogado { get; set; } //Garçom logado no sistema
 
     public static int NumeroDaMesa { get; set; } //Número da mesa selecionada
+    public static string? NumeroDaComanda { get; set; } //Número da mesa selecionada
     public static List<Produto>? ProdutosCarrinho { get; set; } = new List<Produto>(); //Produtos no carrinho
 
     public static List<Contas> ContasNaMemoria { get; set; } = new List<Contas>(); //Contas Já carregadas na memória do aplicativo
@@ -113,7 +114,6 @@ public static class AppState
             {
                 GruposMemoria = await db.grupos.ToListAsync();
             }
-
         }
         catch (Exception ex)
         {

@@ -6,7 +6,7 @@
     <ScrollView>
         <VerticalStackLayout x:Name="container">
 
-            <Border Stroke="White" >
+            <Border x:Name="borderDeNomeDoGarcomFixo" Stroke="White" >
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="15" />
                 </Border.StrokeShape>
@@ -24,7 +24,7 @@
                     <Label  Text="Nenhum Pedido esta aberto ainda!" FontSize="20" FontFamily="OpenSansSemibold" VerticalOptions="Center" HorizontalOptions="Center" TextColor="Red" Margin="0,40,0,0" />
 
                     <Button Margin="0,75,0,0" x:Name="BtnAbrirPedido" Text="Abrir pedido" Clicked="BtnAbrirPedido_Clicked" FontSize="20"/>
-                    <Button x:Name="BtnVerPedidos" Text="Ver pedidos" FontSize="20"/>
+                    <Button x:Name="BtnVerPedidos" Text="Ver pedidos" FontSize="20" Clicked="BtnVerPedidos_Clicked"/>
                 </VerticalStackLayout>
             </Frame>
 

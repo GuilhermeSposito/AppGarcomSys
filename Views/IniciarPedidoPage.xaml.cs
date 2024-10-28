@@ -28,9 +28,25 @@ public partial class IniciarPedidoPage : ContentPage
 
             int ContagemColuna = 0;
             int ContagemDeLinhaReal = 0;
+            List<Mesa> mesasOuComandas = new List<Mesa>();
 
 
-            foreach (var mesa in AppState.MesasNaMemoria!)
+            if (AppState.configuracaoDoApp.Comanda)
+            {
+               var ocupadas = AppState.ContasNaMemoria!.Where(x => x.Status != "P").ToList();
+
+                foreach(var item in ocupadas)
+                {
+                    mesasOuComandas.Add(AppState.MesasNaMemoria!.FirstOrDefault(x => x.Codigo == item.Mesa)!);
+                }
+            }
+            else
+            {
+                mesasOuComandas = AppState.MesasNaMemoria!;
+            }
+
+
+            foreach (var mesa in mesasOuComandas!)
             {
                 if (ContagemColuna > 2)
                     ContagemColuna = 0;
@@ -88,9 +104,12 @@ public partial class IniciarPedidoPage : ContentPage
                     }
                     else
                     {
-                        AppState.NumeroDaMesa = int.Parse(mesa.Codigo!);
+                        if (AppState.configuracaoDoApp.Mesa)
+                            AppState.NumeroDaMesa = int.Parse(mesa.Codigo!);
+                        else
+                            AppState.NumeroDaComanda = mesa.Codigo;
 
-                        if(!AppState.configuracaoDoApp.ListaPorGrupo)
+                        if (!AppState.configuracaoDoApp.ListaPorGrupo)
                             await Navigation.PushAsync(new NavigationPage(new ProdutosPage(null)));
                         else
                             await Navigation.PushAsync(new NavigationPage(new GruposPage()));

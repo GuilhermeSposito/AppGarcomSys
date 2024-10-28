@@ -30,6 +30,7 @@ public partial class Configuracoes : ContentPage
             {
                 AtualizaFrameDeRadioButtonsDeRequisicao();
                 AtualizaFrameDeRadioButtonsDeListagemDeProdutos();
+                AtualizaFrameDeRadioButtonsDeFormaPrincipal();
             }
 
             var ConfigDoIP = await SecureStorage.Default.GetAsync("IP");
@@ -103,11 +104,6 @@ public partial class Configuracoes : ContentPage
         if(configs.RequisicaoNumerica)
             radioReqNumerica.IsChecked = true;
 
-        if (configs.Comanda)
-            radioComanda.IsChecked = true;
-
-        if(configs.Mesa)
-            radioMesa.IsChecked = true;
 
         if (configs.SemRequisicao)
             radioSemReq.IsChecked = true;
@@ -129,6 +125,18 @@ public partial class Configuracoes : ContentPage
 
     }
 
+    private void AtualizaFrameDeRadioButtonsDeFormaPrincipal()
+    {
+        var configs = AppState.configuracaoDoApp;
+
+        if (configs.Comanda)
+            radioComanda.IsChecked = true;
+
+        if (configs.Mesa)
+            radioMesa.IsChecked = true;
+
+    }
+
 
     private void DefineEscolhaNoDbDeRequisicaoEFormaDeLancamento(string? opcEscolhinda)
     {
@@ -140,37 +148,25 @@ public partial class Configuracoes : ContentPage
                 {
                     case "Requisição alfanumérica":
                         db.configappgarcom.FirstOrDefault()!.RequisicaoAlfaNumerica = true;
-                        db.configappgarcom.FirstOrDefault()!.RequisicaoNumerica = false;
-                        db.configappgarcom.FirstOrDefault()!.Comanda = false;
-                        db.configappgarcom.FirstOrDefault()!.Mesa = false;
+                        db.configappgarcom.FirstOrDefault()!.RequisicaoNumerica = false;                   
                         db.configappgarcom.FirstOrDefault()!.SemRequisicao = false;
                         break;
                     case "Requisição numérica":
                         db.configappgarcom.FirstOrDefault()!.RequisicaoAlfaNumerica = false;
                         db.configappgarcom.FirstOrDefault()!.RequisicaoNumerica = true;
-                        db.configappgarcom.FirstOrDefault()!.Comanda = false;
-                        db.configappgarcom.FirstOrDefault()!.Mesa = false;
                         db.configappgarcom.FirstOrDefault()!.SemRequisicao = false;
                         break;
                     case "Comanda":
-                        db.configappgarcom.FirstOrDefault()!.RequisicaoAlfaNumerica = false;
-                        db.configappgarcom.FirstOrDefault()!.RequisicaoNumerica = false;
                         db.configappgarcom.FirstOrDefault()!.Comanda = true;
                         db.configappgarcom.FirstOrDefault()!.Mesa = false;
-                        db.configappgarcom.FirstOrDefault()!.SemRequisicao = false;
                         break;
                     case "Mesas":
-                        db.configappgarcom.FirstOrDefault()!.RequisicaoAlfaNumerica = false;
-                        db.configappgarcom.FirstOrDefault()!.RequisicaoNumerica = false;
                         db.configappgarcom.FirstOrDefault()!.Comanda = false;
                         db.configappgarcom.FirstOrDefault()!.Mesa = true;
-                        db.configappgarcom.FirstOrDefault()!.SemRequisicao = false;
                         break;
                     case "Sem Requisição":
                         db.configappgarcom.FirstOrDefault()!.RequisicaoAlfaNumerica = false;
                         db.configappgarcom.FirstOrDefault()!.RequisicaoNumerica = false;
-                        db.configappgarcom.FirstOrDefault()!.Comanda = false;
-                        db.configappgarcom.FirstOrDefault()!.Mesa = false;
                         db.configappgarcom.FirstOrDefault()!.SemRequisicao = true;
                         break;
                     case "Lista de itens":

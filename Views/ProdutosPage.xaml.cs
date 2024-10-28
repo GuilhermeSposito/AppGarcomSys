@@ -86,29 +86,15 @@ public partial class ProdutosPage : ContentPage
 
                             if (AppState.configuracaoDoApp.RequisicaoAlfaNumerica)
                             {
-                                var requisicao = await DisplayPromptAsync("Digite o nome na requisiçaõ", null, "OK", null);
-                                ProdutoAdicionado.Requisicao = requisicao;
+                                var requisicao = await DisplayPromptAsync("Digite o nome na requisição", null, "OK", null);
+                                ProdutoAdicionado.Requisicao = $"Pedido por: {requisicao}";
                             }
 
                             if (AppState.configuracaoDoApp.RequisicaoNumerica)
                             {
-                                var requisicao = await DisplayPromptAsync("Digite o número da requisiçaõ", null, "OK", null, keyboard: Keyboard.Numeric);
-                                ProdutoAdicionado.Requisicao = requisicao;
-                            }
-
-
-                            if (AppState.configuracaoDoApp.Comanda)
-                            {
                                 var requisicao = await DisplayPromptAsync("Digite o número da comanda", null, "OK", null, keyboard: Keyboard.Numeric);
                                 ProdutoAdicionado.Requisicao = $"Comanda: {requisicao}";
                             }
-
-                            if (AppState.configuracaoDoApp.Mesa)
-                            {
-                                var requisicao = await DisplayPromptAsync("Digite o número da mesa", null, "OK", null, keyboard: Keyboard.Numeric);
-                                ProdutoAdicionado.Requisicao = $"Mesa: {requisicao}";
-                            }
-
 
 
                             AppState.ProdutosCarrinho!.Add(ProdutoAdicionado);
@@ -399,8 +385,8 @@ public partial class ProdutosPage : ContentPage
     {
         try
         {
-            Frame FrameDeSerchBar = new Frame() { BackgroundColor = Color.Parse("#fff"), Margin = new Thickness(10, 0, 10, 0) };
-            SearchBar searchBar = new SearchBar { Placeholder = "Pesquisar Produtos" };
+            Frame FrameDeSerchBar = new Frame() { HeightRequest = 75 ,BackgroundColor = Color.Parse("#024959"), Margin = new Thickness(10, 10, 10, 0),BorderColor = Color.Parse("Black"), CornerRadius = 50 };
+            SearchBar searchBar = new SearchBar { Placeholder = "Pesquisar Produtos" , PlaceholderColor = Color.Parse("#fff"), TextColor = Color.Parse("#fff") };
             FrameDeSerchBar.Content = searchBar;
             LayoutDePesquisa.Children.Add(FrameDeSerchBar);
 
@@ -408,10 +394,10 @@ public partial class ProdutosPage : ContentPage
             {
                 var texto = e.NewTextValue;
 
-                var produtosProcurados = AppState.ProdutosMemoria!.Where(x => x.Descricao!.Contains(texto, StringComparison.OrdinalIgnoreCase) ||  x.Codigo!.Contains(texto, StringComparison.OrdinalIgnoreCase)).ToList();
+                var produtosProcurados = AppState.ProdutosMemoria!.Where(x => x.Descricao!.Contains(texto, StringComparison.OrdinalIgnoreCase) || x.Codigo!.Contains(texto, StringComparison.OrdinalIgnoreCase)).ToList();
                 CarregaProdutosNaTela(produtosProcurados);
 
-                if(String.IsNullOrEmpty(texto))
+                if (String.IsNullOrEmpty(texto))
                     GridDeProdutos.Children.Clear();
             };
 

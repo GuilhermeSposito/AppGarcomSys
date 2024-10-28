@@ -1054,3 +1054,7 @@ C:\SAAB\ProgAppGarcom\AppGarcomSys\AppGarcomSys\obj\Debug\net8.0-android\android
 C:\SAAB\ProgAppGarcom\AppGarcomSys\AppGarcomSys\obj\Debug\net8.0-android\android\marshal_methods.x86_64.o
 C:\SAAB\ProgAppGarcom\AppGarcomSys\AppGarcomSys\obj\Debug\net8.0-android\android\jni_remap.x86_64.o
 C:\SAAB\ProgAppGarcom\AppGarcomSys\AppGarcomSys\obj\Debug\net8.0-android\app_shared_libraries\x86_64\libxamarin-app.so
+C:\SAAB\ProgAppGarcom\AppGarcomSys\AppGarcomSys\obj\Debug\net8.0-android\AppGarcomSys.sourcelink.json
+C:\SAAB\ProgAppGarcom\AppGarcomSys\AppGarcomSys\obj\Debug\net8.0-android\resizetizer\r\drawable\carregando.gif
+C:\SAAB\ProgAppGarcom\AppGarcomSys\AppGarcomSys\obj\Debug\net8.0-android\resizetizer\r\drawable\concluido.png
+C:\SAAB\ProgAppGarcom\AppGarcomSys\AppGarcomSys\obj\Debug\net8.0-android\resizetizer\r\drawable\naoconcluido.png

@@ -15,7 +15,7 @@ public partial class Carrinho : ContentPage
 {
     public event PropertyChangedEventHandler PropertyChanged;
     private Entry entryDeMesa = new Entry() { ReturnType = ReturnType.Done, MaxLength = 3, TextColor = Color.Parse("#fff"), HorizontalTextAlignment = TextAlignment.Center, Keyboard = Keyboard.Numeric, ClearButtonVisibility = ClearButtonVisibility.WhileEditing };
-    private Entry entryDeComanda = new Entry() { IsVisible = false, ReturnType = ReturnType.Done, MaxLength = 3, TextColor = Color.Parse("#fff"), HorizontalTextAlignment = TextAlignment.Center, ClearButtonVisibility = ClearButtonVisibility.WhileEditing };
+    private Entry entryDeComanda = new Entry() { IsVisible = false, ReturnType = ReturnType.Done, MaxLength = 6, TextColor = Color.Parse("#fff"), HorizontalTextAlignment = TextAlignment.Center, ClearButtonVisibility = ClearButtonVisibility.WhileEditing };
 
     private Label lblMesa = new Label() { Text = "Mesa", TextColor = Color.Parse("#fff"), HorizontalTextAlignment = TextAlignment.Center };
     private Label lblComanda = new Label() { Text = "Comanda", TextColor = Color.Parse("#fff"), HorizontalTextAlignment = TextAlignment.Center };
@@ -62,26 +62,37 @@ public partial class Carrinho : ContentPage
     {
         try
         {
-            Grid.SetRow(entryDeMesa, 0);
-            Grid.SetColumn(entryDeMesa, 0);
-            Grid.SetColumn(lblMesa, 0);
-            Grid.SetRow(lblMesa, 1);
+            if (AppState.configuracaoDoApp.Comanda)
+                entryDeComanda.IsVisible = true;
+
+
             if (!entryDeComanda.IsVisible)
             {
                 lblComanda.IsVisible = false;
                 Grid.SetColumnSpan(lblMesa, 2);
                 Grid.SetColumnSpan(entryDeMesa, 2);
             }
+            else
+            {
+                lblMesa.IsVisible = false;
+                entryDeMesa.IsVisible = false;
+                Grid.SetColumnSpan(entryDeComanda, 2);
+                Grid.SetColumnSpan(lblComanda, 2);
+            }
+
+            Grid.SetRow(entryDeMesa, 0);
+            Grid.SetColumn(entryDeMesa, 0);
+            Grid.SetColumn(lblMesa, 0);
+            Grid.SetRow(lblMesa, 1);
             if (!GridDeMesaEComanda.Children.Contains(entryDeMesa))
             {
                 GridDeMesaEComanda.Children.Add(entryDeMesa);
                 GridDeMesaEComanda.Children.Add(lblMesa);
             }
 
-
             Grid.SetRow(entryDeComanda, 0);
-            Grid.SetColumn(entryDeComanda, 1);
-            Grid.SetColumn(lblComanda, 1);
+            Grid.SetColumn(entryDeComanda, 0);
+            Grid.SetColumn(lblComanda, 0);
             Grid.SetRow(lblComanda, 1);
             if (!GridDeMesaEComanda.Children.Contains(entryDeComanda))
             {
@@ -119,11 +130,19 @@ public partial class Carrinho : ContentPage
                 {
                     FrameDePedidoAberto.IsVisible = false;
                     FrameDePedidoAindaNAberto.IsVisible = true;
-                    await Task.Delay(10);
+                    borderDeNomeDoGarcomFixo.IsVisible = false;
+                    await Task.Delay(100);
                 }
                 else
                 {
-                    entryDeMesa.Text = AppState.NumeroDaMesa.ToString().PadLeft(3, '0');
+                    if (entryDeComanda.IsVisible)
+                    {
+                        entryDeComanda.Text = AppState.NumeroDaComanda!.PadLeft(6, '0');
+                    }
+                    else
+                    {
+                        entryDeMesa.Text = AppState.NumeroDaMesa.ToString().PadLeft(3, '0');
+                    }
 
                     FrameDePedidoAberto.IsVisible = true;
                     FrameDePedidoAindaNAberto.IsVisible = false;
@@ -230,7 +249,7 @@ public partial class Carrinho : ContentPage
             };
 
 
-            if (produto.Descricao.Length > 25)
+            if (produto.Descricao!.Length > 25)
             {
                 var NomeDoProduto = String.Empty;
 
@@ -244,7 +263,7 @@ public partial class Carrinho : ContentPage
                     gridContainer.RowDefinitions[0].Height = new GridLength(currentHeight + 2, GridUnitType.Absolute);
                     if (produto.Descricao.Contains("1/3"))
                         FrameDeNomeDoProduto.HeightRequest += 2;
-                    else if(produto.Descricao.Contains("1/2"))
+                    else if (produto.Descricao.Contains("1/2"))
                         FrameDeNomeDoProduto.HeightRequest += 3;
                     else
                         FrameDeNomeDoProduto.HeightRequest += 3;
@@ -504,23 +523,42 @@ public partial class Carrinho : ContentPage
     {
         try
         {
-            var Pedido = new Pedido
+            using (AppDbContext db = new AppDbContext())
             {
-                Mesa = AppState.NumeroDaMesa.ToString().PadLeft(3, '0'),
-                Comanda = entryDeComanda.Text,
-                GarcomResponsavel = AppState.GarconLogado!.Nome,
-                produtos = AppState.ProdutosCarrinho!
-            };
+                var Pedido = new Pedido
+                {
+                    Mesa = AppState.NumeroDaMesa.ToString().PadLeft(3, '0'),
+                    Comanda = entryDeComanda.Text,
+                    GarcomResponsavel = AppState.GarconLogado!.Nome,
+                    produtos = AppState.ProdutosCarrinho!
+                };
 
-            string? CarrinhoJson = JsonSerializer.Serialize(Pedido);
+                string? CarrinhoJson = JsonSerializer.Serialize(Pedido);
 
-            await DisplayAlert("Pedido", CarrinhoJson, "Ok");
+                var NovoPedido = new ApoioAppGarcom()
+                {
+                    PedidoJson = CarrinhoJson,
+                    Processado = false
+                };
 
+                await db.apoioappgarcom.AddAsync(NovoPedido);
+                await db.SaveChangesAsync();
+
+                await Navigation.PushModalAsync(new NavigationPage(new ModalDePedidoEnviado(NovoPedido.Id)));
+          
+
+                ((FlyoutPage)App.Current.MainPage).Detail = new NavigationPage(new Carrinho());
+            }
         }
         catch (Exception ex)
         {
+            await DisplayAlert("Pedido", ex.ToString(), "Ok");
 
-            throw;
         }
+    }
+
+    private async void BtnVerPedidos_Clicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new NavigationPage(new PageVerPedidos()));
     }
 }

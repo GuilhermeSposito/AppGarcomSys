@@ -28,17 +28,22 @@
                 </VerticalStackLayout>
             </Frame>
 
-            <Frame Margin="10,20,10,40" x:Name="frameDeRequisicao">
+            <Frame Margin="10,20,10,10" x:Name="frameDeRequisicao">
                 <VerticalStackLayout>
                     <Label Text="Requisição" HorizontalOptions="Center" FontFamily="OpenSansSemibold"/>
                     <RadioButton x:Name="radioReqAlfaNumerica" Content="Requisição alfanumérica" CheckedChanged="RadioButton_CheckedChanged" />
                     <RadioButton x:Name="radioReqNumerica" Content="Requisição numérica" CheckedChanged="RadioButton_CheckedChanged" />
-                    <RadioButton x:Name="radioComanda" Content="Comanda"  CheckedChanged="RadioButton_CheckedChanged" />
-                    <RadioButton x:Name="radioMesa" Content="Mesas" CheckedChanged="RadioButton_CheckedChanged" />
                     <RadioButton x:Name="radioSemReq" Content="Sem Requisição" CheckedChanged="RadioButton_CheckedChanged" />
                 </VerticalStackLayout>
             </Frame>
 
+            <Frame Margin="10,20,10,40" x:Name="frameDeFormaPrincipal">
+                <VerticalStackLayout>
+                    <Label Text="Forma Principal" HorizontalOptions="Center" FontFamily="OpenSansSemibold"/>
+                    <RadioButton x:Name="radioComanda" Content="Comanda"  CheckedChanged="RadioButton_CheckedChanged" />
+                    <RadioButton x:Name="radioMesa" Content="Mesas" CheckedChanged="RadioButton_CheckedChanged" />
+                </VerticalStackLayout>
+            </Frame>
 
             <Button Text="Salvar" x:Name="BtnSalvarConfigs" BackgroundColor="ForestGreen" Clicked="BtnSalvarConfigs_Clicked"/>
 

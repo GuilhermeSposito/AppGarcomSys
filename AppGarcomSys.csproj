@@ -58,9 +58,12 @@
 
 	<ItemGroup>
 	  <None Remove="Resources\Images\botaodemenos.png" />
+	  <None Remove="Resources\Images\carregando.gif" />
+	  <None Remove="Resources\Images\concluido.png" />
 	  <None Remove="Resources\Images\lapis.png" />
 	  <None Remove="Resources\Images\lixo.png" />
 	  <None Remove="Resources\Images\mais.png" />
+	  <None Remove="Resources\Images\naoconcluido.png" />
 	  <None Remove="Resources\Splash\splash.jpg" />
 	</ItemGroup>
 
@@ -104,9 +107,21 @@
 	  <MauiXaml Update="Views\Modais\ModalDeIncrementos.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\Modais\ModalDePedidoEnviado.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\PageVerPedidos.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\ProdutosPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update=".gitignore">
+	    <Generator>SettingsSingleFileGenerator</Generator>
+	  </None>
 	</ItemGroup>
 
 </Project>

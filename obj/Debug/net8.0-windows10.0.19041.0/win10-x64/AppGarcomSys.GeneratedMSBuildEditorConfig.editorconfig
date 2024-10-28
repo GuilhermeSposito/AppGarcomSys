@@ -90,6 +90,18 @@ build_metadata.AdditionalFiles.ManifestResourceName = AppGarcomSys.Views.Modais.
 build_metadata.AdditionalFiles.TargetPath = Views\Modais\ModalDeIncrementos.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\Modais\ModalDeIncrementos.xaml
 
+[C:/SAAB/ProgAppGarcom/AppGarcomSys/AppGarcomSys/Views/Modais/ModalDePedidoEnviado.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = AppGarcomSys.Views.Modais.ModalDePedidoEnviado.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\Modais\ModalDePedidoEnviado.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\Modais\ModalDePedidoEnviado.xaml
+
+[C:/SAAB/ProgAppGarcom/AppGarcomSys/AppGarcomSys/Views/PageVerPedidos.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = AppGarcomSys.Views.PageVerPedidos.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\PageVerPedidos.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\PageVerPedidos.xaml
+
 [C:/SAAB/ProgAppGarcom/AppGarcomSys/AppGarcomSys/Views/ProdutosPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = AppGarcomSys.Views.ProdutosPage.xaml

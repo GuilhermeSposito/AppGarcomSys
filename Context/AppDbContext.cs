@@ -45,6 +45,8 @@ namespace AppGarcomSys.Context
         public DbSet<Incremento> incrementos { get; set; }
         public DbSet<IncrementoCardapio> incrementocardapio { get; set; }
         public DbSet<ConfigAppGarcom> configappgarcom { get; set; }
+        public DbSet<ApoioAppGarcom> apoioappgarcom { get; set; }
+
 
     }
 }
