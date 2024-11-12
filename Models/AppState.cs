@@ -23,8 +23,8 @@ public static class AppState
     public static List<Garcom>? GarconsNaMemoria { get; set; } //Garçons Já carregados na memória do aplicativo
     public static Garcom? GarconLogado { get; set; } //Garçom logado no sistema
 
-    public static int NumeroDaMesa { get; set; } //Número da mesa selecionada
-    public static string? NumeroDaComanda { get; set; } //Número da mesa selecionada
+    public static int NumeroDaMesa { get; set; } = 0;//Número da mesa selecionada
+    public static string? NumeroDaComanda { get; set; } = "0"; //Número da mesa selecionada 
     public static List<Produto>? ProdutosCarrinho { get; set; } = new List<Produto>(); //Produtos no carrinho
 
     public static List<Contas> ContasNaMemoria { get; set; } = new List<Contas>(); //Contas Já carregadas na memória do aplicativo

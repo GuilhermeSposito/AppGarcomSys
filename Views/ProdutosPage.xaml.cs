@@ -40,16 +40,72 @@ public partial class ProdutosPage : ContentPage
                 if (ContagemColuna > 1)
                     ContagemColuna = 0;
 
+                Grid GridDeInfosDoProduto = new Grid
+                {
+                    ColumnDefinitions = new ColumnDefinitionCollection
+                {
+                    new ColumnDefinition { Width = new GridLength(100, GridUnitType.Star) }
+                },
+
+                    RowDefinitions = new RowDefinitionCollection
+                {
+                    new RowDefinition { Height = new GridLength(70, GridUnitType.Absolute) }
+                }
+                };
+
+
+                var LabelNomeDoProduto = new Label { Text = produto.Descricao, HorizontalOptions = LayoutOptions.Center, FontFamily = "OpenSansSemibold", FontSize = 17, TextColor = Color.Parse("#fff") };
+                Grid.SetColumn(LabelNomeDoProduto, 0);
+                Grid.SetRow(LabelNomeDoProduto, 0);
+                GridDeInfosDoProduto.Add(LabelNomeDoProduto);
+
+                List<double> precos = new List<double> { produto.Preco1, produto.Preco2, produto.Preco3 };
+                int numeroDeLinhasDosPrecos = 1;
+                int ContagemDeInsercaoDeValorNoGrid = 0;
+                foreach (var preco in precos)
+                {
+                    var Tamanho = string.Empty;
+                    if (produto.TamanhoUnico == "S")
+                    {
+                        Tamanho = "";
+                    }
+                    else
+                    {
+                        if (preco == produto.Preco1)
+                            Tamanho = "P:";
+                        else if (preco == produto.Preco2)
+                            Tamanho = "M:";
+                        else if (preco == produto.Preco3)
+                            Tamanho = "G:";
+                    }
+
+                    if (preco > 0)
+                    {
+
+                        GridDeInfosDoProduto.RowDefinitions.Add(new RowDefinition(GridLength.Auto) { });
+                        var LabelDePreco = new Label { Text = $"{Tamanho} {preco.ToString("c")}", HorizontalOptions = LayoutOptions.Center, FontFamily = "OpenSansSemibold", FontSize = 17, TextColor = Color.Parse("#fff") };
+
+                        Grid.SetColumn(LabelDePreco, 0);
+                        Grid.SetRow(LabelDePreco, numeroDeLinhasDosPrecos);
+                        GridDeInfosDoProduto.Add(LabelDePreco);
+                        ContagemDeInsercaoDeValorNoGrid++;
+
+                        if (produto.TamanhoUnico == "S" && ContagemDeInsercaoDeValorNoGrid > 0)
+                            break;
+
+                        numeroDeLinhasDosPrecos++;
+                    }
+                }
+
                 var frame = new Frame
                 {
-                    Content = new Label { Text = produto.Descricao, HorizontalOptions = LayoutOptions.Center, FontFamily = "OpenSansSemibold", FontSize = 17, TextColor = Color.Parse("#fff") },
+                    Content = GridDeInfosDoProduto,
                     BackgroundColor = Color.Parse("#024959"),
                     BorderColor = Colors.Black
                 };
 
+
                 var tapGestureRecognizer = new TapGestureRecognizer();
-
-
                 tapGestureRecognizer.Tapped += async (s, e) =>
                 {
                     if (produto.Fracionado == "N" && QtdFracionado == 0)
@@ -75,7 +131,8 @@ public partial class ProdutosPage : ContentPage
                                 Preco3 = produto.Preco3,
                                 OcultaTablet = produto.OcultaTablet,
                                 Observacao = produto.Observacao,
-                                Quantidade = produto.Quantidade
+                                Quantidade = produto.Quantidade,
+                                TamanhoUnico = produto.TamanhoUnico
                             };
 
                             Tamanhos? TamanhoProduto = await GeraDisplayParaPerguntaDeTamanho(ProdutoAdicionado);
@@ -86,14 +143,14 @@ public partial class ProdutosPage : ContentPage
 
                             if (AppState.configuracaoDoApp.RequisicaoAlfaNumerica)
                             {
-                                var requisicao = await DisplayPromptAsync("Digite o nome na requisição", null, "OK", null);
-                                ProdutoAdicionado.Requisicao = $"Pedido por: {requisicao}";
+                                var requisicao = await DisplayPromptAsync("Digite o nome na requisição", null, "OK", null, maxLength: 10);
+                                ProdutoAdicionado.Requisicao = $"{requisicao}";
                             }
 
                             if (AppState.configuracaoDoApp.RequisicaoNumerica)
                             {
-                                var requisicao = await DisplayPromptAsync("Digite o número da comanda", null, "OK", null, keyboard: Keyboard.Numeric);
-                                ProdutoAdicionado.Requisicao = $"Comanda: {requisicao}";
+                                var requisicao = await DisplayPromptAsync("Digite o número da comanda", null, "OK", null, keyboard: Keyboard.Numeric, maxLength: 10);
+                                ProdutoAdicionado.Requisicao = $"{requisicao}";
                             }
 
 
@@ -165,7 +222,7 @@ public partial class ProdutosPage : ContentPage
 
                                     if (AppState.configuracaoDoApp.RequisicaoAlfaNumerica)
                                     {
-                                        var requisicao = await DisplayPromptAsync("Digite o nome na requisiçaõ", null, "OK", null);
+                                        var requisicao = await DisplayPromptAsync("Digite o nome na requisição", null, "OK", null);
                                         produtoExistente!.Requisicao = requisicao;
                                     }
 
@@ -175,18 +232,6 @@ public partial class ProdutosPage : ContentPage
                                         produtoExistente!.Requisicao = requisicao;
                                     }
 
-
-                                    if (AppState.configuracaoDoApp.Comanda)
-                                    {
-                                        var requisicao = await DisplayPromptAsync("Digite o número da comanda", null, "OK", null, keyboard: Keyboard.Numeric);
-                                        produtoExistente!.Requisicao = $"Comanda: {requisicao}";
-                                    }
-
-                                    if (AppState.configuracaoDoApp.Mesa)
-                                    {
-                                        var requisicao = await DisplayPromptAsync("Digite o número da mesa", null, "OK", null, keyboard: Keyboard.Numeric);
-                                        produtoExistente!.Requisicao = $"Mesa: {requisicao}";
-                                    }
 
                                     await Navigation.PopAsync();
                                     ((FlyoutPage)App.Current.MainPage).Detail = new NavigationPage(new Carrinho());
@@ -215,7 +260,8 @@ public partial class ProdutosPage : ContentPage
                                     Preco3 = produto.Preco3,
                                     OcultaTablet = produto.OcultaTablet,
                                     Observacao = produto.Observacao,
-                                    Quantidade = produto.Quantidade
+                                    Quantidade = produto.Quantidade,
+                                    TamanhoUnico = produto.TamanhoUnico
                                 };
 
                                 AppState.ProdutosCarrinho!.Add(ProdutoAdicionado);
@@ -256,27 +302,14 @@ public partial class ProdutosPage : ContentPage
 
                                     if (AppState.configuracaoDoApp.RequisicaoAlfaNumerica)
                                     {
-                                        var requisicao = await DisplayPromptAsync("Digite o nome na requisiçaõ", null, "OK", null);
+                                        var requisicao = await DisplayPromptAsync("Digite o nome na requisição", null, "OK", null);
                                         produtoExistente!.Requisicao = requisicao;
                                     }
 
                                     if (AppState.configuracaoDoApp.RequisicaoNumerica)
                                     {
-                                        var requisicao = await DisplayPromptAsync("Digite o número da requisiçaõ", null, "OK", null, keyboard: Keyboard.Numeric);
+                                        var requisicao = await DisplayPromptAsync("Digite o número da requisição", null, "OK", null, keyboard: Keyboard.Numeric);
                                         produtoExistente!.Requisicao = requisicao;
-                                    }
-
-
-                                    if (AppState.configuracaoDoApp.Comanda)
-                                    {
-                                        var requisicao = await DisplayPromptAsync("Digite o número da comanda", null, "OK", null, keyboard: Keyboard.Numeric);
-                                        produtoExistente!.Requisicao = $"Comanda: {requisicao}";
-                                    }
-
-                                    if (AppState.configuracaoDoApp.Mesa)
-                                    {
-                                        var requisicao = await DisplayPromptAsync("Digite o número da mesa", null, "OK", null, keyboard: Keyboard.Numeric);
-                                        produtoExistente!.Requisicao = $"Mesa: {requisicao}";
                                     }
 
                                     await Navigation.PopAsync();
@@ -309,7 +342,8 @@ public partial class ProdutosPage : ContentPage
                                     Preco3 = produto.Preco3,
                                     OcultaTablet = produto.OcultaTablet,
                                     Observacao = produto.Observacao,
-                                    Quantidade = produto.Quantidade
+                                    Quantidade = produto.Quantidade,
+                                    TamanhoUnico = produto.TamanhoUnico
                                 };
 
                                 Tamanhos? TamanhoProduto = await GeraDisplayParaPerguntaDeTamanho(ProdutoAdicionado);
@@ -320,27 +354,14 @@ public partial class ProdutosPage : ContentPage
 
                                 if (AppState.configuracaoDoApp.RequisicaoAlfaNumerica)
                                 {
-                                    var requisicao = await DisplayPromptAsync("Digite o nome na requisiçaõ", null, "OK", null);
+                                    var requisicao = await DisplayPromptAsync("Digite o nome na requisição", null, "OK", null);
                                     ProdutoAdicionado!.Requisicao = requisicao;
                                 }
 
                                 if (AppState.configuracaoDoApp.RequisicaoNumerica)
                                 {
-                                    var requisicao = await DisplayPromptAsync("Digite o número da requisiçaõ", null, "OK", null, keyboard: Keyboard.Numeric);
+                                    var requisicao = await DisplayPromptAsync("Digite o número da requisição", null, "OK", null, keyboard: Keyboard.Numeric);
                                     ProdutoAdicionado!.Requisicao = requisicao;
-                                }
-
-
-                                if (AppState.configuracaoDoApp.Comanda)
-                                {
-                                    var requisicao = await DisplayPromptAsync("Digite o número da comanda", null, "OK", null, keyboard: Keyboard.Numeric);
-                                    ProdutoAdicionado!.Requisicao = $"Comanda: {requisicao}";
-                                }
-
-                                if (AppState.configuracaoDoApp.Mesa)
-                                {
-                                    var requisicao = await DisplayPromptAsync("Digite o número da mesa", null, "OK", null, keyboard: Keyboard.Numeric);
-                                    ProdutoAdicionado!.Requisicao = $"Mesa: {requisicao}";
                                 }
 
 
@@ -385,8 +406,8 @@ public partial class ProdutosPage : ContentPage
     {
         try
         {
-            Frame FrameDeSerchBar = new Frame() { HeightRequest = 75 ,BackgroundColor = Color.Parse("#024959"), Margin = new Thickness(10, 10, 10, 0),BorderColor = Color.Parse("Black"), CornerRadius = 50 };
-            SearchBar searchBar = new SearchBar { Placeholder = "Pesquisar Produtos" , PlaceholderColor = Color.Parse("#fff"), TextColor = Color.Parse("#fff") };
+            Frame FrameDeSerchBar = new Frame() { HeightRequest = 75, BackgroundColor = Color.Parse("#024959"), Margin = new Thickness(10, 10, 10, 0), BorderColor = Color.Parse("Black"), CornerRadius = 50 };
+            SearchBar searchBar = new SearchBar { Placeholder = "Pesquisar Produtos", PlaceholderColor = Color.Parse("#fff"), TextColor = Color.Parse("#fff") };
             FrameDeSerchBar.Content = searchBar;
             LayoutDePesquisa.Children.Add(FrameDeSerchBar);
 
@@ -450,38 +471,39 @@ public partial class ProdutosPage : ContentPage
         double PrecoGrande = ProdutoAdicionado.Preco3;
 
 
+        if (ProdutoAdicionado.TamanhoUnico == "S")
+            return Tamanhos.Unico;
+
         if (PrecoPequeno > 0 && PrecoMedio == 0 && PrecoGrande == 0)
             return Tamanhos.Unico;
 
 
         if (PrecoGrande > 0 && PrecoMedio > 0 && PrecoPequeno > 0)
         {
-            UserOptionSize = await DisplayActionSheet($"Produto Montado tem três tamanhos, qual você deseja ?", "Cancelar", null, $"Grande {PrecoGrande.ToString("c")}", $"Médio {PrecoMedio.ToString("c")}", $"Pequeno {PrecoPequeno.ToString("c")}");
+            UserOptionSize = await DisplayActionSheet($"Produto Montado tem três tamanhos, qual você deseja ?", null, null, $"Grande {PrecoGrande.ToString("c")}", $"Médio {PrecoMedio.ToString("c")}", $"Pequeno {PrecoPequeno.ToString("c")}");
         }
         else if (PrecoGrande > 0 && PrecoMedio > 0)
         {
-            UserOptionSize = await DisplayActionSheet($"Produto Montado tem Dois tamanhos, qual você deseja ?", "Cancelar", null, $"Grande {PrecoGrande.ToString("c")}", $"Médio {PrecoMedio.ToString("c")}");
+            UserOptionSize = await DisplayActionSheet($"Produto Montado tem Dois tamanhos, qual você deseja ?", null, null, $"Grande {PrecoGrande.ToString("c")}", $"Médio {PrecoMedio.ToString("c")}");
         }
         else if (PrecoGrande > 0 && PrecoPequeno > 0)
         {
-            UserOptionSize = await DisplayActionSheet($"Produto Montado tem Dois tamanhos, qual você deseja ?", "Cancelar", null, $"Grande {PrecoGrande.ToString("c")}", $"Pequeno {PrecoPequeno.ToString("c")}");
+            UserOptionSize = await DisplayActionSheet($"Produto Montado tem Dois tamanhos, qual você deseja ?", null, null, $"Grande {PrecoGrande.ToString("c")}", $"Pequeno {PrecoPequeno.ToString("c")}");
         }
         else if (PrecoPequeno > 0 && PrecoMedio > 0)
         {
-            UserOptionSize = await DisplayActionSheet($"Produto Montado tem Dois tamanhos, qual você deseja ?", "Cancelar", null, $"Médio {PrecoMedio.ToString("c")}", $"Pequeno {PrecoPequeno.ToString("c")}");
+            UserOptionSize = await DisplayActionSheet($"Produto Montado tem Dois tamanhos, qual você deseja ?", null, null, $"Médio {PrecoMedio.ToString("c")}", $"Pequeno {PrecoPequeno.ToString("c")}");
 
         }
 
-        switch (UserOptionSize)
-        {
-            case "Grande":
-                return Tamanhos.Grande;
-            case "Médio":
-                return Tamanhos.Medio;
-            case "Pequeno":
-                return Tamanhos.Pequeno;
-            default:
-                return Tamanhos.Grande;
-        }
+        if (UserOptionSize.Contains("Grande"))
+            return Tamanhos.Grande;
+        else if (UserOptionSize.Contains("Médio"))
+            return Tamanhos.Medio;
+        else if (UserOptionSize.Contains("Pequeno"))
+            return Tamanhos.Pequeno;
+        else
+            return Tamanhos.Grande;
+
     }
 }

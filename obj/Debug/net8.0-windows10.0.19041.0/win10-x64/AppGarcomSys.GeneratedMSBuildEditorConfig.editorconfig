@@ -54,6 +54,12 @@ build_metadata.AdditionalFiles.ManifestResourceName = AppGarcomSys.Views.Configu
 build_metadata.AdditionalFiles.TargetPath = Views\Configuracoes.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\Configuracoes.xaml
 
+[C:/SAAB/ProgAppGarcom/AppGarcomSys/AppGarcomSys/Views/EnviarAvisoPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = AppGarcomSys.Views.EnviarAvisoPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\EnviarAvisoPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\EnviarAvisoPage.xaml
+
 [C:/SAAB/ProgAppGarcom/AppGarcomSys/AppGarcomSys/Views/GruposPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = AppGarcomSys.Views.GruposPage.xaml
@@ -95,6 +101,12 @@ build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = AppGarcomSys.Views.Modais.ModalDePedidoEnviado.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\Modais\ModalDePedidoEnviado.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\Modais\ModalDePedidoEnviado.xaml
+
+[C:/SAAB/ProgAppGarcom/AppGarcomSys/AppGarcomSys/Views/Modais/SenhaDeConfgisModal.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = AppGarcomSys.Views.Modais.SenhaDeConfgisModal.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\Modais\SenhaDeConfgisModal.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\Modais\SenhaDeConfgisModal.xaml
 
 [C:/SAAB/ProgAppGarcom/AppGarcomSys/AppGarcomSys/Views/PageVerPedidos.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml

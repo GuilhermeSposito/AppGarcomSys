@@ -1,4 +1,5 @@
 using AppGarcomSys.Models;
+using AppGarcomSys.Views.Modais;
 
 namespace AppGarcomSys.Views;
 
@@ -14,10 +15,33 @@ public partial class Login : ContentPage
         base.OnAppearing();
     }
 
+    protected override bool OnBackButtonPressed()
+    {
+        // Exibir um diálogo de confirmação para o usuário
+        Device.BeginInvokeOnMainThread(async () =>
+        {
+            bool confirmar = await DisplayAlert("Sair", "Tem certeza de que deseja sair do aplicativo?", "Sim", "Não");
+            if (confirmar)
+            {
+                // Fecha o aplicativo no Android
+#if ANDROID
+                Android.OS.Process.KillProcess(Android.OS.Process.MyPid());
+#elif IOS
+                // iOS não permite fechamento programático
+#endif
+            }
+        });
+
+        // Impede o fechamento imediato
+        return true;
+    }
+
     private async void BtnDeEntrar_Clicked(object sender, EventArgs e)
     {
         try
         {
+            BtnDeEntrar.IsEnabled = false;
+
             bool LembrarSenha = false;//CheckBoxDeLembrarSenha.IsChecked;
 
             AppState.Autorizado = true;
@@ -42,7 +66,7 @@ public partial class Login : ContentPage
             else
             {
                 AppState.Autorizado = false;
-                await DisplayAlert("Erro", "Usuario Não encontrado", "OK");
+                await DisplayAlert("Erro", "Usuario Não encontrado", "OK");              
             }
         }
         catch (Exception ex) when (ex.Message.Contains("Value cannot be null"))
@@ -55,6 +79,7 @@ public partial class Login : ContentPage
         }
         finally
         {
+            BtnDeEntrar.IsEnabled = true;
             AppState.HideKeyboard(txtSenha);
         }
     }
@@ -64,6 +89,6 @@ public partial class Login : ContentPage
 
     private async void ClickOpcDesenvolvedor_Tapped(object sender, TappedEventArgs e)
     {
-        await Navigation.PushModalAsync(new Configuracoes(eTelaDeDesenvolvedor: true));
+        await Navigation.PushModalAsync(new SenhaDeConfgisModal(eTelaDeDesenvolvedor: true));
     }
 }

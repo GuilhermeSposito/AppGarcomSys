@@ -57,6 +57,9 @@ public partial class ModalDeDecremento : ContentPage
                 Entry InputDeQtdProduto = new Entry { IsReadOnly = true, Placeholder = incremento.Quantidade.ToString(), PlaceholderColor = Color.Parse("Black"), Keyboard = Keyboard.Numeric, HorizontalTextAlignment = TextAlignment.Center };
                 var BtnMenos = new ImageButton { Source = "botaodemenos.png", WidthRequest = 40, HeightRequest = 40 };
 
+                Label ValorDoIncremento = new Label { Text = incremento.Valor.ToString("C"), HorizontalOptions = LayoutOptions.Center, FontFamily = "OpenSansSemibold", FontSize = 17, TextColor = Color.Parse("#fff"), Margin = new Thickness(0, 5, 0, 0) };
+
+
                 LayoutDeQuantidadeDeIncrementos.Add(BtnMais);
                 LayoutDeQuantidadeDeIncrementos.Add(InputDeQtdProduto);
                 LayoutDeQuantidadeDeIncrementos.Add(BtnMenos);
@@ -85,6 +88,7 @@ public partial class ModalDeDecremento : ContentPage
 
                 LayoutContainerDeIncremento.Add(new Label { Text = incremento.Descricao, HorizontalOptions = LayoutOptions.Center, FontFamily = "OpenSansSemibold", FontSize = 17, TextColor = Color.Parse("#fff") });
                 LayoutContainerDeIncremento.Add(LayoutDeQuantidadeDeIncrementos);
+                LayoutContainerDeIncremento.Add(ValorDoIncremento);
 
                 Grid.SetColumn(frame, ContagemColuna);
                 Grid.SetRow(frame, ContagemDeLinhaReal);
@@ -120,7 +124,7 @@ public partial class ModalDeDecremento : ContentPage
                             }
                             else
                             {
-                                produtoExistente.incrementos.FirstOrDefault(x => x.Codigo == incrementoAtual.Codigo).Quantidade += incrementoAtual.Quantidade;
+                                produtoExistente.incrementos.FirstOrDefault(x => x.Codigo == incrementoAtual.Codigo)!.Quantidade += incrementoAtual.Quantidade;
                             }
                         }
                     }
@@ -138,9 +142,12 @@ public partial class ModalDeDecremento : ContentPage
 
     private async void BtnConcluido_Clicked(object sender, EventArgs e)
     {
-        await Task.Delay(50);
-
         ((FlyoutPage)App.Current.MainPage).Detail = new NavigationPage(new Carrinho());
-        await Navigation.PopModalAsync();
+        ((FlyoutPage)App.Current.MainPage).IsPresented = false;
+
+        await Task.Delay(30);
+
+
+        await Navigation.PopAsync();
     }
 }

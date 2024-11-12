@@ -6,13 +6,17 @@ using System.Text.Json;
 
 namespace AppGarcomSys;
 
+
 public partial class App : Application
 {
+//[Activity(Theme = "@style/Maui.SplashTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public App(AppDbContext dbContext)
     {
         InitializeComponent();
         MainPage = new FlyoutPageMenu();
     }
+
+   
 
     protected override async void OnStart()
     {
@@ -47,8 +51,15 @@ public partial class App : Application
              SecureStorage.Default.Remove("CARRINHO");
         }
 
-
+        
         base.OnSleep();
+    }
+
+    protected override void OnResume()
+    {
+
+
+        base.OnResume();
     }
 
 }

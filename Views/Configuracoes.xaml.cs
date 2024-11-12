@@ -1,12 +1,14 @@
 using AppGarcomSys.Context;
 using AppGarcomSys.Models;
+using AppGarcomSys.Views.Modais;
 
 namespace AppGarcomSys.Views;
 
 public partial class Configuracoes : ContentPage
 {
     public bool TelaOpcDesenvolvedor { get; set; } = false;
-
+    public string? SenhaDaTelaDeDesenvolvedor { get; set; } = "69063360";
+    public bool Autorizado { get; set; } = false;
 
     public Configuracoes(bool eTelaDeDesenvolvedor)
     {
@@ -22,9 +24,11 @@ public partial class Configuracoes : ContentPage
 
             if (TelaOpcDesenvolvedor)
             {
+
                 FrameDeIP.IsVisible = true;
                 frameFormaDeLancamento.IsVisible = false;
                 frameDeRequisicao.IsVisible = false;
+                frameDeFormaPrincipal.IsVisible = false;       
             }
             else
             {
@@ -46,7 +50,7 @@ public partial class Configuracoes : ContentPage
         base.OnAppearing();
     }
 
-    private  void txtCaminhoBanco_TextChanged(object sender, TextChangedEventArgs e)
+    private void txtCaminhoBanco_TextChanged(object sender, TextChangedEventArgs e)
     {
     }
 
@@ -98,10 +102,10 @@ public partial class Configuracoes : ContentPage
     {
         var configs = AppState.configuracaoDoApp;
 
-        if(configs.RequisicaoAlfaNumerica)
+        if (configs.RequisicaoAlfaNumerica)
             radioReqAlfaNumerica.IsChecked = true;
 
-        if(configs.RequisicaoNumerica)
+        if (configs.RequisicaoNumerica)
             radioReqNumerica.IsChecked = true;
 
 
@@ -114,13 +118,13 @@ public partial class Configuracoes : ContentPage
     {
         var configs = AppState.configuracaoDoApp;
 
-        if(configs.ListaDeItens)
+        if (configs.ListaDeItens)
             radioListaDeItens.IsChecked = true;
 
-        if(configs.ListaPorGrupo)
+        if (configs.ListaPorGrupo)
             radioListaDeGrupos.IsChecked = true;
 
-        if(configs.BuscaDeItens)
+        if (configs.BuscaDeItens)
             radioBuscaDeItens.IsChecked = true;
 
     }
@@ -148,7 +152,7 @@ public partial class Configuracoes : ContentPage
                 {
                     case "Requisição alfanumérica":
                         db.configappgarcom.FirstOrDefault()!.RequisicaoAlfaNumerica = true;
-                        db.configappgarcom.FirstOrDefault()!.RequisicaoNumerica = false;                   
+                        db.configappgarcom.FirstOrDefault()!.RequisicaoNumerica = false;
                         db.configappgarcom.FirstOrDefault()!.SemRequisicao = false;
                         break;
                     case "Requisição numérica":

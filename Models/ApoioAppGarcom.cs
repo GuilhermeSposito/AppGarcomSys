@@ -15,5 +15,6 @@ public class ApoioAppGarcom
     [Column("obs")] public string? Obs { get; set; }
     [Column("criadoem")] public DateTime CriadoEm { get; set; } = DateTime.Now.ToUniversalTime();
     [Column("processado")] public bool Processado { get; set; }
+    [Column("tipo")] public string? Tipo { get; set; }  
 
 }

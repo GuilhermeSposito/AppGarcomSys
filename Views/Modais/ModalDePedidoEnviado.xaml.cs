@@ -53,8 +53,44 @@ public partial class ModalDePedidoEnviado : ContentPage
             {
                 using (AppDbContext db = new AppDbContext())
                 {
-                    db.apoioappgarcom.Remove(db.apoioappgarcom.FirstOrDefault(x => x.Id == IdDoPedido)!);
-                    await db.SaveChangesAsync();
+                    var PedidoNaoEnviado = db.apoioappgarcom.FirstOrDefault(x => x.Id == IdDoPedido);
+
+                    string? MotiVoDoErro = PedidoNaoEnviado!.Obs;
+
+                    if(MotiVoDoErro is not null)
+                    {
+                        Label label = new Label
+                        {
+                            Text = $"Motivo - {MotiVoDoErro}",
+                            FontSize = 20,
+                            TextColor = Color.Parse("#FF4242"),
+                            FontFamily = "OpenSansSemibold",
+                            HorizontalOptions = LayoutOptions.Center,
+                            VerticalOptions = LayoutOptions.Center,
+                            Margin = new Thickness(10, 0, 0, 0)
+                        };
+
+                        LayoutDePedidoNaoEnviado.Children.Add(label);
+                    }
+                    else
+                    {
+                        PedidoNaoEnviado.Obs = "Não foi possivel inserir o pedido, confira se o integrador esta aberto!";
+                        db.SaveChanges();
+
+                        Label label = new Label
+                        {
+                            Text = $"Motivo - {PedidoNaoEnviado.Obs}",
+                            FontSize = 20,
+                            TextColor = Color.Parse("#FF4242"),
+                            FontFamily = "OpenSansSemibold",
+                            HorizontalOptions = LayoutOptions.Center,
+                            VerticalOptions = LayoutOptions.Center,
+                            Margin = new Thickness(10, 0, 0, 0)
+
+                        };
+
+                        LayoutDePedidoNaoEnviado.Children.Add(label);
+                    }
                 }
 
                 CarregandoIndicador.IsRunning = false;
@@ -82,6 +118,9 @@ public partial class ModalDePedidoEnviado : ContentPage
     private async void TapDePedidoEnviado_Tapped(object sender, TappedEventArgs e)
     {
         await Task.Delay(10);
+
+        ((FlyoutPage)App.Current.MainPage).Detail = new NavigationPage(new Carrinho());
+        ((FlyoutPage)App.Current.MainPage).IsPresented = false;
 
         await Navigation.PopModalAsync();
     }

@@ -14,7 +14,7 @@ namespace AppGarcomSys.Views;
 public partial class Carrinho : ContentPage
 {
     public event PropertyChangedEventHandler PropertyChanged;
-    private Entry entryDeMesa = new Entry() { ReturnType = ReturnType.Done, MaxLength = 3, TextColor = Color.Parse("#fff"), HorizontalTextAlignment = TextAlignment.Center, Keyboard = Keyboard.Numeric, ClearButtonVisibility = ClearButtonVisibility.WhileEditing };
+    private Entry entryDeMesa = new Entry() { ReturnType = ReturnType.Done, MaxLength = 4, TextColor = Color.Parse("#fff"), HorizontalTextAlignment = TextAlignment.Center, Keyboard = Keyboard.Numeric, ClearButtonVisibility = ClearButtonVisibility.WhileEditing };
     private Entry entryDeComanda = new Entry() { IsVisible = false, ReturnType = ReturnType.Done, MaxLength = 6, TextColor = Color.Parse("#fff"), HorizontalTextAlignment = TextAlignment.Center, ClearButtonVisibility = ClearButtonVisibility.WhileEditing };
 
     private Label lblMesa = new Label() { Text = "Mesa", TextColor = Color.Parse("#fff"), HorizontalTextAlignment = TextAlignment.Center };
@@ -31,32 +31,58 @@ public partial class Carrinho : ContentPage
             };
 
             // Associar o evento ao gesto
-            swipeLeftGesture.Swiped += OnSwipedRigth;
+            swipeLeftGesture.Swiped += OnSwipedRigth!;
 
             // Adicionar o gesto ao layout da página
             container.GestureRecognizers.Add(swipeLeftGesture);
             FrameDePedidoAberto.GestureRecognizers.Add(swipeLeftGesture);
             FrameDeProdutosNoCarrinho.GestureRecognizers.Add(swipeLeftGesture);
 
-            entryDeMesa.Completed += async (s, e) =>
-            {
-                if (int.TryParse(entryDeMesa.Text, out int mesa))
-                {
-                    AppState.NumeroDaMesa = mesa;
-                }
-
-                entryDeMesa.Text = AppState.NumeroDaMesa.ToString().PadLeft(3, '0');
-            };
-
+            entryDeMesa.TextChanged += OnTextChenged!;
+            entryDeComanda.TextChanged += OnTextChenged!;
 
         }
         catch (Exception ex)
         {
 
-            DisplayAlert("Error", ex.ToString(), "cancel");
+            DisplayAlert("Error", ex.ToString(), "Cancelar");
         }
     }
 
+    protected override bool OnBackButtonPressed()
+    {
+        // Exibir um diálogo de confirmação para o usuário
+        Device.BeginInvokeOnMainThread(async () =>
+        {
+            bool confirmar = await DisplayAlert("Sair", "Tem certeza de que deseja sair do aplicativo?", "Sim", "Não");
+            if (confirmar)
+            {
+                // Fecha o aplicativo no Android
+#if ANDROID
+                Android.OS.Process.KillProcess(Android.OS.Process.MyPid());
+#elif IOS
+                // iOS não permite fechamento programático
+#endif
+            }
+        });
+
+        // Impede o fechamento imediato
+        return true;
+    }
+
+    private void OnTextChenged(object sender, TextChangedEventArgs e)
+    {
+        var entry = sender as Entry; // Identifica qual Entry disparou o evento.
+
+        if (entry == entryDeComanda && entry.IsVisible)
+        {
+            AppState.NumeroDaComanda = entry.Text.PadLeft(6, '0');
+        }
+        else if (entry == entryDeMesa && entry.IsVisible)
+        {
+            AppState.NumeroDaMesa = int.Parse(entry.Text);
+        }
+    }
 
     protected async override void OnAppearing()
     {
@@ -141,7 +167,7 @@ public partial class Carrinho : ContentPage
                     }
                     else
                     {
-                        entryDeMesa.Text = AppState.NumeroDaMesa.ToString().PadLeft(3, '0');
+                        entryDeMesa.Text = AppState.NumeroDaMesa.ToString().PadLeft(4, '0');
                     }
 
                     FrameDePedidoAberto.IsVisible = true;
@@ -197,7 +223,7 @@ public partial class Carrinho : ContentPage
         };
 
         // Associar o evento ao gesto
-        swipeLeftGesture.Swiped += OnSwipedRigth;
+        swipeLeftGesture.Swiped += OnSwipedRigth!;
 
         foreach (var produto in produtos)
         {
@@ -228,12 +254,12 @@ public partial class Carrinho : ContentPage
 
             if (!String.IsNullOrEmpty(produto.Requisicao))
             {
-                Label LblDeNomeDoProduto = new Label { Text = $"Requisição: {produto.Requisicao}", HorizontalTextAlignment = TextAlignment.Center, FontFamily = "OpenSansSemibold", TextColor = Color.Parse("#fff") };
+                Label LbLRequsicaoProduto = new Label { Text = $"Requisição: {produto.Requisicao}", HorizontalTextAlignment = TextAlignment.Center, FontFamily = "OpenSansSemibold", TextColor = Color.Parse("#fff") };
 
-                Grid.SetColumn(LblDeNomeDoProduto, 0);
-                Grid.SetRow(LblDeNomeDoProduto, 3);
+                Grid.SetColumn(LbLRequsicaoProduto, 0);
+                Grid.SetRow(LbLRequsicaoProduto, 3);
 
-                gridContainer.Children.Add(LblDeNomeDoProduto);
+                gridContainer.Children.Add(LbLRequsicaoProduto);
             }
 
             FrameDeContainer.Content = gridContainer;
@@ -254,7 +280,7 @@ public partial class Carrinho : ContentPage
                 var NomeDoProduto = String.Empty;
 
 
-                Label LblDeNomeDoProduto = new Label { VerticalTextAlignment = TextAlignment.Center, Text = produto.Descricao, FontSize = 20, HorizontalTextAlignment = TextAlignment.Center, FontFamily = "OpenSansSemibold", TextColor = Color.Parse("#fff") };
+                Label LblDeNomeDoProduto = new Label { Text = produto.Descricao, FontSize = 18, HorizontalTextAlignment = TextAlignment.Center, FontFamily = "OpenSansSemibold", TextColor = Color.Parse("#fff") };
                 LayoutDeNomeDoProduto.Children.Add(LblDeNomeDoProduto);
 
                 for (int i = 2; i < produto.Descricao.Length; i++)
@@ -262,9 +288,19 @@ public partial class Carrinho : ContentPage
                     var currentHeight = gridContainer.RowDefinitions[0].Height.Value;
                     gridContainer.RowDefinitions[0].Height = new GridLength(currentHeight + 2, GridUnitType.Absolute);
                     if (produto.Descricao.Contains("1/3"))
-                        FrameDeNomeDoProduto.HeightRequest += 2;
+                    {
+                        if (produto.Descricao.Length <= 32)
+                            FrameDeNomeDoProduto.HeightRequest += 3.5;
+                        else
+                            FrameDeNomeDoProduto.HeightRequest += 2;
+                    }
                     else if (produto.Descricao.Contains("1/2"))
-                        FrameDeNomeDoProduto.HeightRequest += 3;
+                    {
+                        if (produto.Descricao.Length <= 32)
+                            FrameDeNomeDoProduto.HeightRequest += 3.5;
+                        else
+                            FrameDeNomeDoProduto.HeightRequest += 2.5;
+                    }
                     else
                         FrameDeNomeDoProduto.HeightRequest += 3;
                 }
@@ -272,7 +308,7 @@ public partial class Carrinho : ContentPage
             }
             else
             {
-                Label LblDeNomeDoProduto = new Label { Text = produto.Descricao, FontSize = 20, HorizontalTextAlignment = TextAlignment.Center, FontFamily = "OpenSansSemibold", TextColor = Color.Parse("#fff") };
+                Label LblDeNomeDoProduto = new Label { Text = produto.Descricao, FontSize = 18, HorizontalTextAlignment = TextAlignment.Center, FontFamily = "OpenSansSemibold", TextColor = Color.Parse("#fff") };
                 LayoutDeNomeDoProduto.Children.Add(LblDeNomeDoProduto);
             }
 
@@ -345,12 +381,17 @@ public partial class Carrinho : ContentPage
 
             BtnMais.Clicked += async (s, e) =>
             {
-                await Navigation.PushModalAsync(new NavigationPage(new ModalDeIncrementos(produto.Codigo)));
+                BtnMais.IsEnabled = false;
+                BtnMenos.IsEnabled = false;
+                await Navigation.PushAsync(new NavigationPage(new ModalDeIncrementos(produto.Codigo)));
+
             };
 
             BtnMenos.Clicked += async (s, e) =>
             {
-                await Navigation.PushModalAsync(new NavigationPage(new ModalDeDecremento(produto.Codigo)));
+                BtnMenos.IsEnabled = false;
+                BtnMais.IsEnabled = false;
+                await Navigation.PushAsync(new NavigationPage(new ModalDeDecremento(produto.Codigo)));
             };
 
             Grid.SetColumn(LayoutDeButtonsIncrementos, 1);
@@ -418,7 +459,7 @@ public partial class Carrinho : ContentPage
             };
             BtnDeExcluirProduto.Clicked += async (s, e) =>
             {
-                var action = await DisplayActionSheet("Você deseja mesmo escluir esse produto do carrinho?", "Cancelar", null, "Sim", "Não");
+                var action = await DisplayActionSheet("Você deseja mesmo excluir esse produto do carrinho?", "Cancelar", null, "Sim", "Não");
 
                 if (action == "Sim")
                 {
@@ -525,11 +566,32 @@ public partial class Carrinho : ContentPage
         {
             using (AppDbContext db = new AppDbContext())
             {
+                if (AppState.configuracaoDoApp.Mesa)
+                {
+                    if (AppState.NumeroDaMesa == 0)
+                    {
+                        throw new Exception("Informe o número da mesa");
+                    }
+                }
+                else
+                {
+                    if (AppState.NumeroDaComanda is null || AppState.NumeroDaComanda == "000000")
+                    {
+                        throw new Exception("Informe o número da comanda");
+                    }
+
+                }
+
+                if (AppState.ProdutosCarrinho!.Count == 0)
+                {
+                    throw new Exception("Adicione produtos ao carrinho para poder enviar o pedido!");
+                }
+
                 var Pedido = new Pedido
                 {
-                    Mesa = AppState.NumeroDaMesa.ToString().PadLeft(3, '0'),
-                    Comanda = entryDeComanda.Text,
-                    GarcomResponsavel = AppState.GarconLogado!.Nome,
+                    Mesa = AppState.NumeroDaMesa.ToString().PadLeft(4, '0'),
+                    Comanda = AppState.NumeroDaComanda!.PadLeft(6, '0'),
+                    GarcomResponsavel = AppState.GarconLogado!.Codigo,
                     produtos = AppState.ProdutosCarrinho!
                 };
 
@@ -538,21 +600,24 @@ public partial class Carrinho : ContentPage
                 var NovoPedido = new ApoioAppGarcom()
                 {
                     PedidoJson = CarrinhoJson,
-                    Processado = false
+                    Processado = false,
+                    Tipo = "pedido"
                 };
+
+                //await DisplayAlert("Pedido", CarrinhoJson, "Ok");
 
                 await db.apoioappgarcom.AddAsync(NovoPedido);
                 await db.SaveChangesAsync();
 
                 await Navigation.PushModalAsync(new NavigationPage(new ModalDePedidoEnviado(NovoPedido.Id)));
-          
+
 
                 ((FlyoutPage)App.Current.MainPage).Detail = new NavigationPage(new Carrinho());
             }
         }
         catch (Exception ex)
         {
-            await DisplayAlert("Pedido", ex.ToString(), "Ok");
+            await DisplayAlert("Pedido", ex.Message, "Ok");
 
         }
     }

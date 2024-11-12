@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppGarcomSys.Views.Modais.SenhaDeConfgisModal"
+             Title="Senha">
+    <VerticalStackLayout Padding="20" Spacing="15" VerticalOptions="Center">
+        <Label Text="Digite a senha para acessar as configurações de desenvolvedor" 
+               FontSize="18" HorizontalOptions="Center" FontFamily="OpenSansSemiBold" />
+
+        <Entry x:Name="SenhaEntry" Placeholder="Digite a senha" 
+               IsPassword="True" Keyboard="Default" />
+
+        <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+            <Button Text="Cancelar" Clicked="Cancelar_Clicked" />
+            <Button Text="OK" Clicked="OK_Clicked" />
+        </HorizontalStackLayout>
+    </VerticalStackLayout>
+</ContentPage>

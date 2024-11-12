@@ -36,7 +36,7 @@ public partial class GruposPage : ContentPage
                 var frame = new Frame
                 {                 
                     Content = new Label { Text = grupo.Descricao, HorizontalOptions = LayoutOptions.Center, FontFamily = "OpenSansSemibold", FontSize = 17, TextColor = Color.Parse("#fff")},
-                    BackgroundColor = Color.Parse("#024959"),
+                    BackgroundColor = Color.Parse("#F53D34"),
                     BorderColor = Colors.Black
                 };
 

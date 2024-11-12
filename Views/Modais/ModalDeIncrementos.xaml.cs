@@ -55,12 +55,15 @@ public partial class ModalDeIncrementos : ContentPage
                 LayoutDeQuantidadeDeIncrementos.HorizontalOptions = LayoutOptions.Center;
 
                 var BtnMais = new ImageButton { Source = "mais.png", WidthRequest = 40, HeightRequest = 40 };
-                Entry InputDeQtdProduto = new Entry { IsReadOnly = true, Placeholder = incremento.Quantidade.ToString(), PlaceholderColor = Color.Parse("Black"), Keyboard = Keyboard.Numeric, HorizontalTextAlignment = TextAlignment.Center };
+                Entry InputDeQtdProduto = new Entry { IsReadOnly = true, Placeholder = incremento.Quantidade.ToString(), PlaceholderColor = Color.Parse("White"), Keyboard = Keyboard.Numeric, HorizontalTextAlignment = TextAlignment.Center };
                 var BtnMenos = new ImageButton { Source = "botaodemenos.png", WidthRequest = 40, HeightRequest = 40 };
+
+                Label ValorDoIncremento = new Label { Text = incremento.Valor.ToString("C"), HorizontalOptions = LayoutOptions.Center, FontFamily = "OpenSansSemibold", FontSize = 17, TextColor = Color.Parse("#fff") , Margin = new Thickness(0,5,0,0)};
 
                 LayoutDeQuantidadeDeIncrementos.Add(BtnMais);
                 LayoutDeQuantidadeDeIncrementos.Add(InputDeQtdProduto);
                 LayoutDeQuantidadeDeIncrementos.Add(BtnMenos);
+             
 
                 BtnMais.Clicked += (s, e) =>
                 {
@@ -86,6 +89,7 @@ public partial class ModalDeIncrementos : ContentPage
 
                 LayoutContainerDeIncremento.Add(new Label { Text = incremento.Descricao, HorizontalOptions = LayoutOptions.Center, FontFamily = "OpenSansSemibold", FontSize = 17, TextColor = Color.Parse("#fff") });
                 LayoutContainerDeIncremento.Add(LayoutDeQuantidadeDeIncrementos);
+                LayoutContainerDeIncremento.Add(ValorDoIncremento);
 
                 Grid.SetColumn(frame, ContagemColuna);
                 Grid.SetRow(frame, ContagemDeLinhaReal);
@@ -139,12 +143,13 @@ public partial class ModalDeIncrementos : ContentPage
 
     private async void BtnConcluido_Clicked(object sender, EventArgs e)
     {
-        
+        ((FlyoutPage)App.Current.MainPage).Detail = new NavigationPage(new Carrinho());
+        ((FlyoutPage)App.Current.MainPage).IsPresented = false;
+
         await Task.Delay(30);
 
-        ((FlyoutPage)App.Current.MainPage).Detail = new NavigationPage(new Carrinho());
 
-        await Navigation.PopModalAsync();
+        await Navigation.PopAsync();
     }
 
 }

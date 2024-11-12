@@ -1045,6 +1045,12 @@ C:\SAAB\ProgAppGarcom\AppGarcomSys\AppGarcomSys\obj\Debug\net8.0-android\stamp\_
 C:\SAAB\ProgAppGarcom\AppGarcomSys\AppGarcomSys\obj\Debug\net8.0-android\stamp\_GenerateJavaStubs.stamp
 C:\SAAB\ProgAppGarcom\AppGarcomSys\AppGarcomSys\obj\Debug\net8.0-android\stamp\_GeneratePackageManagerJava.stamp
 C:\SAAB\ProgAppGarcom\AppGarcomSys\AppGarcomSys\obj\Debug\net8.0-android\stamp\_ResolveLibraryProjectImports.stamp
+C:\SAAB\ProgAppGarcom\AppGarcomSys\AppGarcomSys\obj\Debug\net8.0-android\AppGarcomSys.sourcelink.json
+C:\SAAB\ProgAppGarcom\AppGarcomSys\AppGarcomSys\obj\Debug\net8.0-android\resizetizer\r\drawable\carregando.gif
+C:\SAAB\ProgAppGarcom\AppGarcomSys\AppGarcomSys\obj\Debug\net8.0-android\resizetizer\r\drawable\concluido.png
+C:\SAAB\ProgAppGarcom\AppGarcomSys\AppGarcomSys\obj\Debug\net8.0-android\resizetizer\r\drawable\naoconcluido.png
+C:\SAAB\ProgAppGarcom\AppGarcomSys\AppGarcomSys\obj\Debug\net8.0-android\resizetizer\r\drawable\down.png
+C:\SAAB\ProgAppGarcom\AppGarcomSys\AppGarcomSys\obj\Debug\net8.0-android\resizetizer\r\drawable\fechar.png
 C:\SAAB\ProgAppGarcom\AppGarcomSys\AppGarcomSys\obj\Debug\net8.0-android\android\typemaps.x86_64.ll
 C:\SAAB\ProgAppGarcom\AppGarcomSys\AppGarcomSys\obj\Debug\net8.0-android\android\environment.x86_64.ll
 C:\SAAB\ProgAppGarcom\AppGarcomSys\AppGarcomSys\obj\Debug\net8.0-android\android\compressed_assemblies.x86_64.ll
@@ -1054,7 +1060,3 @@ C:\SAAB\ProgAppGarcom\AppGarcomSys\AppGarcomSys\obj\Debug\net8.0-android\android
 C:\SAAB\ProgAppGarcom\AppGarcomSys\AppGarcomSys\obj\Debug\net8.0-android\android\marshal_methods.x86_64.o
 C:\SAAB\ProgAppGarcom\AppGarcomSys\AppGarcomSys\obj\Debug\net8.0-android\android\jni_remap.x86_64.o
 C:\SAAB\ProgAppGarcom\AppGarcomSys\AppGarcomSys\obj\Debug\net8.0-android\app_shared_libraries\x86_64\libxamarin-app.so
-C:\SAAB\ProgAppGarcom\AppGarcomSys\AppGarcomSys\obj\Debug\net8.0-android\AppGarcomSys.sourcelink.json
-C:\SAAB\ProgAppGarcom\AppGarcomSys\AppGarcomSys\obj\Debug\net8.0-android\resizetizer\r\drawable\carregando.gif
-C:\SAAB\ProgAppGarcom\AppGarcomSys\AppGarcomSys\obj\Debug\net8.0-android\resizetizer\r\drawable\concluido.png
-C:\SAAB\ProgAppGarcom\AppGarcomSys\AppGarcomSys\obj\Debug\net8.0-android\resizetizer\r\drawable\naoconcluido.png

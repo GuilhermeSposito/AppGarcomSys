@@ -17,6 +17,9 @@
     <MauiXaml Update="Views\Configuracoes.xaml">
       <SubType>Designer</SubType>
     </MauiXaml>
+    <MauiXaml Update="Views\EnviarAvisoPage.xaml">
+      <SubType>Designer</SubType>
+    </MauiXaml>
     <MauiXaml Update="Views\GruposPage.xaml">
       <SubType>Designer</SubType>
     </MauiXaml>
@@ -36,6 +39,9 @@
       <SubType>Designer</SubType>
     </MauiXaml>
     <MauiXaml Update="Views\Modais\ModalDePedidoEnviado.xaml">
+      <SubType>Designer</SubType>
+    </MauiXaml>
+    <MauiXaml Update="Views\Modais\SenhaDeConfgisModal.xaml">
       <SubType>Designer</SubType>
     </MauiXaml>
     <MauiXaml Update="Views\PageVerPedidos.xaml">

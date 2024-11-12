@@ -2,6 +2,8 @@
 obj\Debug\net8.0-android\resizetizer\r\drawable\botaodemenos.png
 obj\Debug\net8.0-android\resizetizer\r\drawable\carregando.gif
 obj\Debug\net8.0-android\resizetizer\r\drawable\concluido.png
+obj\Debug\net8.0-android\resizetizer\r\drawable\down.png
+obj\Debug\net8.0-android\resizetizer\r\drawable\fechar.png
 obj\Debug\net8.0-android\resizetizer\r\drawable\lapis.png
 obj\Debug\net8.0-android\resizetizer\r\drawable\lixo.png
 obj\Debug\net8.0-android\resizetizer\r\drawable\mais.png
