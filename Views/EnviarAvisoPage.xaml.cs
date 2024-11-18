@@ -1,5 +1,7 @@
 using AppGarcomSys.Context;
 using AppGarcomSys.Models;
+using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
 
 namespace AppGarcomSys.Views;
 
@@ -135,9 +137,9 @@ public partial class EnviarAvisoPage : ContentPage
 
                 tapGestureRecognizer.Tapped += async (s, e) =>
                 {
-                   var Resp =  await DisplayActionSheet("Você tem certeza que deseja fechar essa mesa ?","Cancelar", null, "Sim", "Não");
+                    var Resp = await DisplayActionSheet("Você tem certeza que deseja fechar essa mesa ?", "Cancelar", null, "Sim", "Não");
 
-                    if(Resp == "Sim")
+                    if (Resp == "Sim")
                     {
                         await EnviaAvisoDeFecharMesa(mesa.Codigo!);
 
@@ -180,11 +182,26 @@ public partial class EnviarAvisoPage : ContentPage
         {
             using (AppDbContext db = new AppDbContext())
             {
-               
+                ClsSuporteDeFechamentoDeMesa clsSuporteDeFechamentoDeMesa = new ClsSuporteDeFechamentoDeMesa()
+                {
+                    NumeroMesaOuComanda = numeroOuComanda
+                };
 
+                Setup? setup = await db.setup.FirstOrDefaultAsync();
+                if (setup is not null)
+                {
+                    if (setup.CouvertHoje)
+                    {
+                        string QtdPessoas = await DisplayPromptAsync("Couvert", "Informe a quantidade de pessoas", "Ok", null, "Quantidade de pessoaas", 100, keyboard: Keyboard.Numeric, "0");
+
+                        clsSuporteDeFechamentoDeMesa.ValorCouvert = setup.CouvertValor * Convert.ToSingle(QtdPessoas);
+                    }
+                }
+
+                string? Json = JsonSerializer.Serialize(clsSuporteDeFechamentoDeMesa);
                 db.apoioappgarcom.Add(new ApoioAppGarcom()
                 {
-                    PedidoJson = numeroOuComanda,
+                    PedidoJson = Json,
                     Processado = false,
                     Tipo = "FECHAMENTO"
                 });
@@ -196,7 +213,7 @@ public partial class EnviarAvisoPage : ContentPage
         {
             await Console.Out.WriteLineAsync(ex.ToString());
         }
-    } 
+    }
 
     private async void BtnEnviarAvisoDiverso_Clicked(object sender, EventArgs e)
     {
@@ -206,7 +223,7 @@ public partial class EnviarAvisoPage : ContentPage
             {
                 db.apoioappgarcom.Add(new ApoioAppGarcom()
                 {
-                    PedidoJson = $"Aviso de {AppState.GarconLogado!.Nome}:\n\n {EntryDeAviso.Text }",
+                    PedidoJson = $"Aviso de {AppState.GarconLogado!.Nome}:\n\n {EntryDeAviso.Text}",
                     Processado = false,
                     Tipo = "AVISO"
                 });

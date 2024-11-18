@@ -1,11 +1,13 @@
 using AppGarcomSys.Context;
 using AppGarcomSys.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace AppGarcomSys.Views.Modais;
 
 public partial class ModalDePedidoEnviado : ContentPage
 {
     public int IdDoPedido { get; set; }
+    public int TempoDeEspera { get; set; } = 10;
     public ModalDePedidoEnviado(int idDoPedido)
     {
         IdDoPedido = idDoPedido;
@@ -36,7 +38,7 @@ public partial class ModalDePedidoEnviado : ContentPage
                     await Task.Delay(1000);
                 }
 
-                if (contador > 10)
+                if (contador > TempoDeEspera)
                 {
                     condicao = false;
                 }
@@ -109,10 +111,31 @@ public partial class ModalDePedidoEnviado : ContentPage
 
     protected async override void OnAppearing()
     {
+        await DefineTempoDeEspera();    
         await GeraLogicaDeStatusDePedido();
 
 
         base.OnAppearing();
+    }
+
+    private async Task DefineTempoDeEspera()
+    {
+        try
+        {
+            using (AppDbContext db = new AppDbContext())
+            {
+                var ConfigApp = await db.configappgarcom.FirstOrDefaultAsync();
+
+                if(ConfigApp is not null)
+                {
+                    TempoDeEspera = ConfigApp.TempoEnvioPedido;
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            
+        }
     }
 
     private async void TapDePedidoEnviado_Tapped(object sender, TappedEventArgs e)

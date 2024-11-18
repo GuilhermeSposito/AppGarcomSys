@@ -152,4 +152,13 @@ public partial class ModalDeIncrementos : ContentPage
         await Navigation.PopAsync();
     }
 
+    protected async override void OnDisappearing()
+    {
+        ((FlyoutPage)App.Current.MainPage).Detail = new NavigationPage(new Carrinho());
+        ((FlyoutPage)App.Current.MainPage).IsPresented = false;
+
+        await Task.Delay(30);
+
+        base.OnDisappearing();
+    }
 }

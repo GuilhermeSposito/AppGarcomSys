@@ -589,17 +589,17 @@ public partial class Carrinho : ContentPage
 
                 var Pedido = new Pedido
                 {
-                    Mesa = AppState.NumeroDaMesa.ToString().PadLeft(4, '0'),
+                    Mesa = AppState.NumeroDaMesa.ToString().PadLeft(4, '0'),   
                     Comanda = AppState.NumeroDaComanda!.PadLeft(6, '0'),
                     GarcomResponsavel = AppState.GarconLogado!.Codigo,
                     produtos = AppState.ProdutosCarrinho!
                 };
 
-                string? CarrinhoJson = JsonSerializer.Serialize(Pedido);
+                string? PedidoJson = JsonSerializer.Serialize(Pedido);
 
                 var NovoPedido = new ApoioAppGarcom()
                 {
-                    PedidoJson = CarrinhoJson,
+                    PedidoJson = PedidoJson,
                     Processado = false,
                     Tipo = "pedido"
                 };

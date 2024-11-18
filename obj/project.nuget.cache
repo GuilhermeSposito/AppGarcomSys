@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Ge5mts+NIWTlSo6k6gxDXz30sKO9xlvBNr5gVtv2lhXYN+6SmqMbf7QyRLbkfC5xcqGx/zvsEyL9LvtPiI4aUg==",
+  "dgSpecHash": "P5DMFql2AFlwWVk6ZIWFsetW0rQk7AC97tkUJzh37hjBtpaX4K8lGQL38yGg31XN37LalB3hMIK75Z0mM6qHIw==",
   "success": true,
   "projectFilePath": "C:\\SAAB\\ProgAppGarcom\\AppGarcomSys\\AppGarcomSys\\AppGarcomSys.csproj",
   "expectedPackageFiles": [
@@ -119,7 +119,11 @@
     "C:\\Users\\gui-c\\.nuget\\packages\\xamarin.kotlin.stdlib.jdk8\\1.9.0.1\\xamarin.kotlin.stdlib.jdk8.1.9.0.1.nupkg.sha512",
     "C:\\Users\\gui-c\\.nuget\\packages\\xamarin.kotlinx.coroutines.android\\1.7.2.1\\xamarin.kotlinx.coroutines.android.1.7.2.1.nupkg.sha512",
     "C:\\Users\\gui-c\\.nuget\\packages\\xamarin.kotlinx.coroutines.core.jvm\\1.7.2.1\\xamarin.kotlinx.coroutines.core.jvm.1.7.2.1.nupkg.sha512",
-    "C:\\Users\\gui-c\\.nuget\\packages\\microsoft.windows.sdk.net.ref\\10.0.19041.31\\microsoft.windows.sdk.net.ref.10.0.19041.31.nupkg.sha512"
+    "C:\\Users\\gui-c\\.nuget\\packages\\microsoft.netcore.app.crossgen2.win-x64\\8.0.4\\microsoft.netcore.app.crossgen2.win-x64.8.0.4.nupkg.sha512",
+    "C:\\Users\\gui-c\\.nuget\\packages\\microsoft.windows.sdk.net.ref\\10.0.19041.31\\microsoft.windows.sdk.net.ref.10.0.19041.31.nupkg.sha512",
+    "C:\\Users\\gui-c\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x64\\8.0.4\\microsoft.aspnetcore.app.runtime.win-x64.8.0.4.nupkg.sha512",
+    "C:\\Users\\gui-c\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x64\\8.0.4\\microsoft.windowsdesktop.app.runtime.win-x64.8.0.4.nupkg.sha512",
+    "C:\\Users\\gui-c\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x64\\8.0.4\\microsoft.netcore.app.runtime.win-x64.8.0.4.nupkg.sha512"
   ],
   "logs": []
 }

@@ -1,4 +1,4 @@
-using Android.Runtime;
+//using Android.Runtime;
 using AppGarcomSys.Context;
 using AppGarcomSys.Models;
 using AppGarcomSys.Views.Modais;

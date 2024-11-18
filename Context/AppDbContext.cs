@@ -46,6 +46,7 @@ namespace AppGarcomSys.Context
         public DbSet<IncrementoCardapio> incrementocardapio { get; set; }
         public DbSet<ConfigAppGarcom> configappgarcom { get; set; }
         public DbSet<ApoioAppGarcom> apoioappgarcom { get; set; }
+        public DbSet<Setup> setup { get; set; }
 
 
     }

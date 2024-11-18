@@ -37,11 +37,18 @@
                 </VerticalStackLayout>
             </Frame>
 
-            <Frame Margin="10,20,10,40" x:Name="frameDeFormaPrincipal">
+            <Frame Margin="10,20,10,10" x:Name="frameDeFormaPrincipal">
                 <VerticalStackLayout>
                     <Label Text="Forma Principal" HorizontalOptions="Center" FontFamily="OpenSansSemibold"/>
                     <RadioButton x:Name="radioComanda" Content="Comanda"  CheckedChanged="RadioButton_CheckedChanged" />
                     <RadioButton x:Name="radioMesa" Content="Mesas" CheckedChanged="RadioButton_CheckedChanged" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame Margin="10,20,10,40" x:Name="FrameDeTempoDeEspera">
+                <VerticalStackLayout>
+                    <Label Text="Tempo de espera" HorizontalOptions="Center" FontFamily="OpenSansSemibold"/>
+                    <Entry x:Name="txtTempoDeEspera" TextChanged="txtTempoDeEspera_TextChanged" Text="{Binding TempoDeEspera}" Placeholder="Tempo de espera em segundos" Keyboard="Numeric"/>
                 </VerticalStackLayout>
             </Frame>
 

@@ -28,13 +28,15 @@ public partial class Configuracoes : ContentPage
                 FrameDeIP.IsVisible = true;
                 frameFormaDeLancamento.IsVisible = false;
                 frameDeRequisicao.IsVisible = false;
-                frameDeFormaPrincipal.IsVisible = false;       
+                frameDeFormaPrincipal.IsVisible = false;
+                FrameDeTempoDeEspera.IsVisible = false; 
             }
             else
             {
                 AtualizaFrameDeRadioButtonsDeRequisicao();
                 AtualizaFrameDeRadioButtonsDeListagemDeProdutos();
                 AtualizaFrameDeRadioButtonsDeFormaPrincipal();
+                AtualizaEntryDeTempoDeEspera();
             }
 
             var ConfigDoIP = await SecureStorage.Default.GetAsync("IP");
@@ -52,6 +54,13 @@ public partial class Configuracoes : ContentPage
 
     private void txtCaminhoBanco_TextChanged(object sender, TextChangedEventArgs e)
     {
+    }
+
+    private void AtualizaEntryDeTempoDeEspera()
+    {
+        var configs = AppState.configuracaoDoApp;
+
+        txtTempoDeEspera.Text = configs.TempoEnvioPedido.ToString();
     }
 
     private async void BtnSalvarConfigs_Clicked(object sender, EventArgs e)
@@ -199,4 +208,15 @@ public partial class Configuracoes : ContentPage
         }
     }
 
+    private void txtTempoDeEspera_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        using (AppDbContext db = new AppDbContext())
+        { 
+            if(int.TryParse(txtTempoDeEspera.Text, out int tempo))
+            {
+                db.configappgarcom.FirstOrDefault()!.TempoEnvioPedido = tempo;
+                db.SaveChanges();
+            }        
+        }
+    }
 }

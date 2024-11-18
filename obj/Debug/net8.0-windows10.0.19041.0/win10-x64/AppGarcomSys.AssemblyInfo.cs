@@ -18,7 +18,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AppGarcomSys")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+fa0ded8fabe286837406c4a894444fdace4830ba")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+c5a1e9f6ce81d70e8a51941f454524cedf887396")]
 [assembly: System.Reflection.AssemblyProductAttribute("AppGarcomSys")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AppGarcomSys")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

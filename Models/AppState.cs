@@ -202,14 +202,6 @@ public static class AppState
             inputMethodManager.HideSoftInputFromWindow(token, Android.Views.InputMethods.HideSoftInputFlags.None);
             activity.Window.DecorView.ClearFocus(); // Remove o foco do Entry
         }
-#elif IOS || MACCATALYST
-        UIKit.UIApplication.SharedApplication.KeyWindow?.EndEditing(true);
-#elif WINDOWS
-            var nativeView = entry.Handler?.PlatformView;
-            if (nativeView is Microsoft.UI.Xaml.Controls.Control control)
-            {
-                control.Focus(Microsoft.UI.Xaml.FocusState.Unfocused); // Tira o foco do Entry no Windows
-            }
-#endif
+#endif 
     }
 }
