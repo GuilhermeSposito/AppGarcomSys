@@ -12,113 +12,115 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = AppGarcomSys
-build_property.ProjectDir = C:\SAAB\ProgAppGarcom\AppGarcomSys\AppGarcomSys\
+build_property.ProjectDir = C:\Users\roger\source\repos\RogerSys\AppGarcomSys\AppGarcomSys\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.EffectiveAnalysisLevelStyle = 8.0
+build_property.EnableCodeStyleSeverity = 
 
-[C:/SAAB/ProgAppGarcom/AppGarcomSys/AppGarcomSys/App.xaml]
+[C:/Users/roger/source/repos/RogerSys/AppGarcomSys/AppGarcomSys/App.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = AppGarcomSys.App.xaml
 build_metadata.AdditionalFiles.TargetPath = App.xaml
 build_metadata.AdditionalFiles.RelativePath = App.xaml
 
-[C:/SAAB/ProgAppGarcom/AppGarcomSys/AppGarcomSys/AppShell.xaml]
+[C:/Users/roger/source/repos/RogerSys/AppGarcomSys/AppGarcomSys/AppShell.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = AppGarcomSys.AppShell.xaml
 build_metadata.AdditionalFiles.TargetPath = AppShell.xaml
 build_metadata.AdditionalFiles.RelativePath = AppShell.xaml
 
-[C:/SAAB/ProgAppGarcom/AppGarcomSys/AppGarcomSys/FlyoutPageMenu.xaml]
+[C:/Users/roger/source/repos/RogerSys/AppGarcomSys/AppGarcomSys/FlyoutPageMenu.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = AppGarcomSys.FlyoutPageMenu.xaml
 build_metadata.AdditionalFiles.TargetPath = FlyoutPageMenu.xaml
 build_metadata.AdditionalFiles.RelativePath = FlyoutPageMenu.xaml
 
-[C:/SAAB/ProgAppGarcom/AppGarcomSys/AppGarcomSys/Resources/Styles/Colors.xaml]
+[C:/Users/roger/source/repos/RogerSys/AppGarcomSys/AppGarcomSys/Resources/Styles/Colors.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = AppGarcomSys.Resources.Styles.Colors.xaml
 build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Colors.xaml
 build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Colors.xaml
 
-[C:/SAAB/ProgAppGarcom/AppGarcomSys/AppGarcomSys/Resources/Styles/Styles.xaml]
+[C:/Users/roger/source/repos/RogerSys/AppGarcomSys/AppGarcomSys/Resources/Styles/Styles.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = AppGarcomSys.Resources.Styles.Styles.xaml
 build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Styles.xaml
 build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Styles.xaml
 
-[C:/SAAB/ProgAppGarcom/AppGarcomSys/AppGarcomSys/Views/Carrinho.xaml]
+[C:/Users/roger/source/repos/RogerSys/AppGarcomSys/AppGarcomSys/Views/Carrinho.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = AppGarcomSys.Views.Carrinho.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\Carrinho.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\Carrinho.xaml
 
-[C:/SAAB/ProgAppGarcom/AppGarcomSys/AppGarcomSys/Views/Configuracoes.xaml]
+[C:/Users/roger/source/repos/RogerSys/AppGarcomSys/AppGarcomSys/Views/Configuracoes.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = AppGarcomSys.Views.Configuracoes.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\Configuracoes.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\Configuracoes.xaml
 
-[C:/SAAB/ProgAppGarcom/AppGarcomSys/AppGarcomSys/Views/EnviarAvisoPage.xaml]
+[C:/Users/roger/source/repos/RogerSys/AppGarcomSys/AppGarcomSys/Views/EnviarAvisoPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = AppGarcomSys.Views.EnviarAvisoPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\EnviarAvisoPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\EnviarAvisoPage.xaml
 
-[C:/SAAB/ProgAppGarcom/AppGarcomSys/AppGarcomSys/Views/GruposPage.xaml]
+[C:/Users/roger/source/repos/RogerSys/AppGarcomSys/AppGarcomSys/Views/GruposPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = AppGarcomSys.Views.GruposPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\GruposPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\GruposPage.xaml
 
-[C:/SAAB/ProgAppGarcom/AppGarcomSys/AppGarcomSys/Views/IniciarPedidoPage.xaml]
+[C:/Users/roger/source/repos/RogerSys/AppGarcomSys/AppGarcomSys/Views/IniciarPedidoPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = AppGarcomSys.Views.IniciarPedidoPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\IniciarPedidoPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\IniciarPedidoPage.xaml
 
-[C:/SAAB/ProgAppGarcom/AppGarcomSys/AppGarcomSys/Views/Menu.xaml]
+[C:/Users/roger/source/repos/RogerSys/AppGarcomSys/AppGarcomSys/Views/Menu.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = AppGarcomSys.Views.Menu.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\Menu.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\Menu.xaml
 
-[C:/SAAB/ProgAppGarcom/AppGarcomSys/AppGarcomSys/Views/Modais/Login.xaml]
+[C:/Users/roger/source/repos/RogerSys/AppGarcomSys/AppGarcomSys/Views/Modais/Login.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = AppGarcomSys.Views.Modais.Login.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\Modais\Login.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\Modais\Login.xaml
 
-[C:/SAAB/ProgAppGarcom/AppGarcomSys/AppGarcomSys/Views/Modais/ModalDeDecremento.xaml]
+[C:/Users/roger/source/repos/RogerSys/AppGarcomSys/AppGarcomSys/Views/Modais/ModalDeDecremento.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = AppGarcomSys.Views.Modais.ModalDeDecremento.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\Modais\ModalDeDecremento.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\Modais\ModalDeDecremento.xaml
 
-[C:/SAAB/ProgAppGarcom/AppGarcomSys/AppGarcomSys/Views/Modais/ModalDeIncrementos.xaml]
+[C:/Users/roger/source/repos/RogerSys/AppGarcomSys/AppGarcomSys/Views/Modais/ModalDeIncrementos.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = AppGarcomSys.Views.Modais.ModalDeIncrementos.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\Modais\ModalDeIncrementos.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\Modais\ModalDeIncrementos.xaml
 
-[C:/SAAB/ProgAppGarcom/AppGarcomSys/AppGarcomSys/Views/Modais/ModalDePedidoEnviado.xaml]
+[C:/Users/roger/source/repos/RogerSys/AppGarcomSys/AppGarcomSys/Views/Modais/ModalDePedidoEnviado.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = AppGarcomSys.Views.Modais.ModalDePedidoEnviado.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\Modais\ModalDePedidoEnviado.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\Modais\ModalDePedidoEnviado.xaml
 
-[C:/SAAB/ProgAppGarcom/AppGarcomSys/AppGarcomSys/Views/Modais/SenhaDeConfgisModal.xaml]
+[C:/Users/roger/source/repos/RogerSys/AppGarcomSys/AppGarcomSys/Views/Modais/SenhaDeConfgisModal.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = AppGarcomSys.Views.Modais.SenhaDeConfgisModal.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\Modais\SenhaDeConfgisModal.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\Modais\SenhaDeConfgisModal.xaml
 
-[C:/SAAB/ProgAppGarcom/AppGarcomSys/AppGarcomSys/Views/PageVerPedidos.xaml]
+[C:/Users/roger/source/repos/RogerSys/AppGarcomSys/AppGarcomSys/Views/PageVerPedidos.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = AppGarcomSys.Views.PageVerPedidos.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\PageVerPedidos.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\PageVerPedidos.xaml
 
-[C:/SAAB/ProgAppGarcom/AppGarcomSys/AppGarcomSys/Views/ProdutosPage.xaml]
+[C:/Users/roger/source/repos/RogerSys/AppGarcomSys/AppGarcomSys/Views/ProdutosPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = AppGarcomSys.Views.ProdutosPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\ProdutosPage.xaml
