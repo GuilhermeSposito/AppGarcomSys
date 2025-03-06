@@ -26,13 +26,13 @@ public partial class Carrinho : ContentPage
 
             var swipeLeftGesture = new SwipeGestureRecognizer
             {
-                Direction = SwipeDirection.Right  // Definir a direção para a esquerda
+                Direction = SwipeDirection.Right  // Definir a direï¿½ï¿½o para a esquerda
             };
 
-            // Associar o evento ao gesto
+            // Associar o evento ao gesto teste
             swipeLeftGesture.Swiped += OnSwipedRigth!;
 
-            // Adicionar o gesto ao layout da página
+            // Adicionar o gesto ao layout da pï¿½gina
             container.GestureRecognizers.Add(swipeLeftGesture);
             FrameDePedidoAberto.GestureRecognizers.Add(swipeLeftGesture);
             FrameDeProdutosNoCarrinho.GestureRecognizers.Add(swipeLeftGesture);
@@ -50,17 +50,17 @@ public partial class Carrinho : ContentPage
 
     protected override bool OnBackButtonPressed()
     {
-        // Exibir um diálogo de confirmação para o usuário
+        // Exibir um diï¿½logo de confirmaï¿½ï¿½o para o usuï¿½rio
         Device.BeginInvokeOnMainThread(async () =>
         {
-            bool confirmar = await DisplayAlert("Sair", "Tem certeza de que deseja sair do aplicativo?", "Sim", "Não");
+            bool confirmar = await DisplayAlert("Sair", "Tem certeza de que deseja sair do aplicativo?", "Sim", "Nï¿½o");
             if (confirmar)
             {
                 // Fecha o aplicativo no Android
 #if ANDROID
                 Android.OS.Process.KillProcess(Android.OS.Process.MyPid());
 #elif IOS
-                // iOS não permite fechamento programático
+                // iOS nï¿½o permite fechamento programï¿½tico
 #endif
             }
         });
@@ -149,7 +149,7 @@ public partial class Carrinho : ContentPage
                     LblNomeGarcom.Text = AppState.GarconLogado.Nome;
                 }
 
-                AppState.CarregarContas(); //Não desejamos esperar para não atrapalhar a execução do programa
+                AppState.CarregarContas(); //Nï¿½o desejamos esperar para nï¿½o atrapalhar a execuï¿½ï¿½o do programa
 
                 if (!AppState.ProdutosCarrinho!.Any())
                 {
@@ -166,7 +166,7 @@ public partial class Carrinho : ContentPage
                         if (AppState.EBalcao)
                         {
                             entryDeComanda.IsVisible = false;
-                            lblComanda.Text = "Balcão";
+                            lblComanda.Text = "Balcï¿½o";
                         }
                         else
                         {
@@ -178,7 +178,7 @@ public partial class Carrinho : ContentPage
                         if (AppState.EBalcao)
                         {
                             entryDeMesa.IsVisible = false;
-                            lblMesa.Text = "Balcão";
+                            lblMesa.Text = "Balcï¿½o";
                         }
                         else
                         {
@@ -235,7 +235,7 @@ public partial class Carrinho : ContentPage
 
         var swipeLeftGesture = new SwipeGestureRecognizer
         {
-            Direction = SwipeDirection.Right  // Definir a direção para a esquerda
+            Direction = SwipeDirection.Right  // Definir a direï¿½ï¿½o para a esquerda
         };
 
         // Associar o evento ao gesto
@@ -270,7 +270,7 @@ public partial class Carrinho : ContentPage
 
             if (!String.IsNullOrEmpty(produto.Requisicao))
             {
-                Label LbLRequsicaoProduto = new Label { Text = $"Requisição: {produto.Requisicao}", HorizontalTextAlignment = TextAlignment.Center, FontFamily = "OpenSansSemibold", TextColor = Color.Parse("#fff") };
+                Label LbLRequsicaoProduto = new Label { Text = $"Requisiï¿½ï¿½o: {produto.Requisicao}", HorizontalTextAlignment = TextAlignment.Center, FontFamily = "OpenSansSemibold", TextColor = Color.Parse("#fff") };
 
                 Grid.SetColumn(LbLRequsicaoProduto, 0);
                 Grid.SetRow(LbLRequsicaoProduto, 3);
@@ -380,7 +380,7 @@ public partial class Carrinho : ContentPage
             //-----------------------------------------------------------------------------------
 
 
-            //Botão de incrementos e decrementos
+            //Botï¿½o de incrementos e decrementos
             //-----------------------------------------------------------------------------------
             var BtnMais = new ImageButton { Source = "mais.png", WidthRequest = 40, HeightRequest = 40 };
             var BtnMenos = new ImageButton { Source = "botaodemenos.png", WidthRequest = 40, HeightRequest = 40 };
@@ -415,7 +415,7 @@ public partial class Carrinho : ContentPage
             //-----------------------------------------------------------------------------------
 
 
-            //Botão para adicionar observação ao produto
+            //Botï¿½o para adicionar observaï¿½ï¿½o ao produto
             //-----------------------------------------------------------------------------------
             var bTnObs = new ImageButton { Source = "lapis.png", WidthRequest = 40, HeightRequest = 40 };
             VerticalStackLayout LayoutDeButtonObs = new VerticalStackLayout
@@ -439,7 +439,7 @@ public partial class Carrinho : ContentPage
 
             bTnObs.Clicked += async (s, e) =>
             {
-                string resultado = await DisplayPromptAsync("Observação do produto", null, maxLength: 80, keyboard: Keyboard.Text, initialValue: produto.Observacao);
+                string resultado = await DisplayPromptAsync("Observaï¿½ï¿½o do produto", null, maxLength: 80, keyboard: Keyboard.Text, initialValue: produto.Observacao);
 
                 produto.Observacao = resultado;
 
@@ -463,7 +463,7 @@ public partial class Carrinho : ContentPage
 
 
 
-            //Botão para excluir o produto do carrinho
+            //Botï¿½o para excluir o produto do carrinho
             //-----------------------------------------------------------------------------------
             ImageButton BtnDeExcluirProduto = new ImageButton { Source = "lixo.png", WidthRequest = 40, HeightRequest = 40 };
             VerticalStackLayout LayoutDeButtonExcluiItem = new VerticalStackLayout
@@ -475,7 +475,7 @@ public partial class Carrinho : ContentPage
             };
             BtnDeExcluirProduto.Clicked += async (s, e) =>
             {
-                var action = await DisplayActionSheet("Você deseja mesmo excluir esse produto do carrinho?", "Cancelar", null, "Sim", "Não");
+                var action = await DisplayActionSheet("Vocï¿½ deseja mesmo excluir esse produto do carrinho?", "Cancelar", null, "Sim", "Nï¿½o");
 
                 if (action == "Sim")
                 {
@@ -560,7 +560,7 @@ public partial class Carrinho : ContentPage
         await Navigation.PushAsync(new NavigationPage(new IniciarPedidoPage()));
 
         BtnAbrirPedido.IsEnabled = true;
-        
+
     }
 
     protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
@@ -570,7 +570,7 @@ public partial class Carrinho : ContentPage
 
     private async void BtnCancelarPedido_Clicked(object sender, EventArgs e)
     {
-        var action = await DisplayActionSheet("Você deseja mesmo cancelar esse pedido?", "Cancelar", null, "Sim", "Não");
+        var action = await DisplayActionSheet("Vocï¿½ deseja mesmo cancelar esse pedido?", "Cancelar", null, "Sim", "Nï¿½o");
 
         if (action == "Sim")
         {
@@ -594,10 +594,10 @@ public partial class Carrinho : ContentPage
                 {
                     if (AppState.NumeroDaMesa == 0 && !AppState.EBalcao)
                     {
-                        throw new Exception("Informe o número da mesa");
+                        throw new Exception("Informe o nï¿½mero da mesa");
                     }
-                    else if (AppState.EBalcao == true) //aqui envia um pedido balcão 
-                    {  
+                    else if (AppState.EBalcao == true) //aqui envia um pedido balcï¿½o 
+                    {
                         await EnviaPedido(eBalcao: true, AppState.BalcaoInfos);
                     }
                     else if (!AppState.EBalcao)
@@ -609,7 +609,7 @@ public partial class Carrinho : ContentPage
                 {
                     if (AppState.NumeroDaComanda is null || AppState.NumeroDaComanda == "000000" || AppState.NumeroDaComanda == "0" && !AppState.EBalcao)
                     {
-                        throw new Exception("Informe o número da comanda");
+                        throw new Exception("Informe o nï¿½mero da comanda");
                     }
                     else if (!AppState.EBalcao)
                     {
@@ -619,7 +619,7 @@ public partial class Carrinho : ContentPage
                         {
                             if (Comanda.Bloqueado)
                             {
-                                throw new Exception("Comanda bloqueada, não é possível enviar o pedido!");
+                                throw new Exception("Comanda bloqueada, nï¿½o ï¿½ possï¿½vel enviar o pedido!");
                             }
                             else
                             {
@@ -627,7 +627,7 @@ public partial class Carrinho : ContentPage
                             }
                         }
                     }
-                    else //aqui envia um pedido balcão 
+                    else //aqui envia um pedido balcï¿½o 
                     {
                         await EnviaPedido(eBalcao: true, AppState.BalcaoInfos);
                     }
@@ -667,14 +667,15 @@ public partial class Carrinho : ContentPage
 
                 if (!eBalcao && AppState.configuracaoDoApp.Comanda && !AppState.Repetido)
                 {
-                    var nome = await DisplayPromptAsync("Pedido de Comanda. Informe o nome do cliente:", null, "Ok", "Não", null, maxLength: 30);
+                    var nome = await DisplayPromptAsync("Pedido de Comanda. Informe o nomeï¿½doï¿½cliente:", null, "Ok", "Nï¿½o", null, maxLength: 30);
                     if (nome is not null)
                         NomeCliente = nome;
-                }else if (eBalcao)
+                }
+                else if (eBalcao)
                 {
                     if (!AppState.BalcaoInfos.Repetido)
                     {
-                        var nome = await DisplayPromptAsync("Pedido de Balcão. Informe o nome do cliente:", null, "Ok", "Não", null, maxLength: 30);
+                        var nome = await DisplayPromptAsync("Pedido de Balcï¿½o. Informe o nomeï¿½doï¿½cliente:", null, "Ok", "Nï¿½o", null, maxLength: 30);
 
                         AppState.BalcaoInfos.NomeCliente = nome;
                     }
