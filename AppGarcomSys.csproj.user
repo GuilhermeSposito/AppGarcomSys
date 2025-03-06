@@ -6,6 +6,7 @@
     <ActiveDebugProfile>Pixel 6 Pro - API 34 (Android 14.0 - API 34)</ActiveDebugProfile>
     <SelectedPlatformGroup>Emulator</SelectedPlatformGroup>
     <DefaultDevice>pixel_6_pro_-_api_34</DefaultDevice>
+    <SelectedDevice>pixel_6_pro_-_api_34</SelectedDevice>
   </PropertyGroup>
   <ItemGroup>
     <MauiXaml Update="FlyoutPageMenu.xaml">

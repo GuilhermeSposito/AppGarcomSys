@@ -9,6 +9,7 @@ public partial class EnviarAvisoPage : ContentPage
 {
     private int ApoioFrameDeAvisoDiverso { get; set; } = 0;
     private int ApoioFrameDeFecharMesa { get; set; } = 0;
+    ActivityIndicator ActivityIndicator1 = new ActivityIndicator { IsRunning = true, IsVisible = true };
 
     public EnviarAvisoPage()
     {
@@ -45,19 +46,25 @@ public partial class EnviarAvisoPage : ContentPage
     {
         if (ApoioFrameDeFecharMesa == 0)
         {
+            LayoutDeMesasAbertas.Add(ActivityIndicator1);
+            LayoutDeMesasAbertas.IsVisible = true;
+
             await CarregaMesasOcupadasNaTela();
             BtnDownFecharMesa.Source = "fechar.png";
 
             BtnDownFecharMesa.WidthRequest = 70;
             BtnDownFecharMesa.HeightRequest = 70;
 
-            LayoutDeMesasAbertas.IsVisible = true;
-
+ 
             ApoioFrameDeFecharMesa = 1;
         }
         else
         {
+
             BtnDownFecharMesa.Source = "down.png";
+            LayoutDeMesasAbertas.Remove(ActivityIndicator1);
+            ActivityIndicator1.IsRunning = true;
+            ActivityIndicator1.IsVisible = true;
             LayoutDeMesasAbertas.IsVisible = false;
             GridDeMesas.Children.Clear();
 
@@ -73,12 +80,16 @@ public partial class EnviarAvisoPage : ContentPage
         try
         {
             await AppState.CarregarContas();
+            await Task.Delay(2000);
+
+            ActivityIndicator1.IsRunning = false;
+            ActivityIndicator1.IsVisible = false;
 
             int ContagemColuna = 0;
             int ContagemDeLinhaReal = 0;
             List<Mesa> mesasOuComandas = new List<Mesa>();
 
-            List<Contas> ocupadas = AppState.ContasNaMemoria!.Where(x => x.Status != "P" && x.Status != "F").OrderBy(x => int.Parse(x.Mesa!)).ToList();
+            List<Contas> ocupadas = AppState.ContasNaMemoria!.Where(x => x.Status != "P" && x.Status != "F").OrderBy(x => int.TryParse(x.Mesa!, out int result)).ToList();
 
             foreach (var item in ocupadas)
             {
@@ -91,8 +102,11 @@ public partial class EnviarAvisoPage : ContentPage
                 if (ContagemColuna > 2)
                     ContagemColuna = 0;
 
+                string? NumeroMesa = mesa.Codigo;
+
+
                 var frame = new Frame();
-                var LblNumeroDeMesa = new Label { Text = mesa.Codigo, HorizontalOptions = LayoutOptions.Center, FontFamily = "OpenSansSemibold", FontSize = 17, TextColor = Color.Parse("#fff") };
+                var LblNumeroDeMesa = new Label { Text = NumeroMesa, HorizontalOptions = LayoutOptions.Center, FontFamily = "OpenSansSemibold", FontSize = 17, TextColor = Color.Parse("#fff") };
 
 
                 if (AppState.configuracaoDoApp.Mesa)
@@ -120,6 +134,14 @@ public partial class EnviarAvisoPage : ContentPage
 
                     if (MesaNoContas is not null)
                     {
+                        if (MesaNoContas.Mesa!.Contains("B"))
+                        {
+                            if (!String.IsNullOrEmpty(MesaNoContas.Cliente!.Trim()))
+                            {
+                                LblNumeroDeMesa.Text += $" / {MesaNoContas.Cliente}";
+                            }
+                        }
+
                         if (MesaNoContas.Status == "F")
                         {
                             frame.BackgroundColor = Color.Parse("Yellow");

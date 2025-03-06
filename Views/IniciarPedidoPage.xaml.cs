@@ -11,7 +11,7 @@ public partial class IniciarPedidoPage : ContentPage
         InitializeComponent();
         var swipeLeftGesture = new SwipeGestureRecognizer
         {
-            Direction = SwipeDirection.Left  
+            Direction = SwipeDirection.Left
         };
         swipeLeftGesture.Swiped += OnSwipeLeft;
 
@@ -21,12 +21,49 @@ public partial class IniciarPedidoPage : ContentPage
     {
         try
         {
-            AppState.CarregarContas();
+            AppState.SetaInfosDeBalcao();
+            AppState.NumeroDaMesa = 0;
+            AppState.NumeroDaComanda = "0";
+
+            var swipeLeftGesture = new SwipeGestureRecognizer
+            {
+                Direction = SwipeDirection.Right
+            };
+            swipeLeftGesture.Swiped += OnSwipeLeft;
+            GridDeMesas.GestureRecognizers.Add(swipeLeftGesture);
+
+            //await AppState.CarregarContas();
 
             int ContagemColuna = 0;
             int ContagemDeLinhaReal = 0;
             List<Mesa> mesasOuComandas = new List<Mesa>();
 
+
+            var FrameBalcao = new Frame
+            {
+                Content = new Label { Text = "Balcão", HorizontalOptions = LayoutOptions.Center, FontFamily = "OpenSansSemibold", FontSize = 17, TextColor = Color.Parse("#fff") },
+                BackgroundColor = Color.Parse("#3B8112"),
+                BorderColor = Colors.Black
+            };
+            var TapNoFrameBalcao = new TapGestureRecognizer();
+            TapNoFrameBalcao.Tapped += async (s, e) =>
+            {
+                AppState.EBalcao = true;
+
+                if (!AppState.configuracaoDoApp.ListaPorGrupo)
+                    await Navigation.PushAsync(new NavigationPage(new ProdutosPage(null)));
+                else
+                    await Navigation.PushAsync(new NavigationPage(new GruposPage()));
+            };
+
+            if (AppState.configuracaoDoApp.UsaBalcao)
+            {
+                FrameBalcao.GestureRecognizers.Add(TapNoFrameBalcao);
+                Grid.SetColumn(FrameBalcao, ContagemColuna);
+                Grid.SetRow(FrameBalcao, ContagemDeLinhaReal);
+                GridDeMesas.Children.Add(FrameBalcao);
+                ContagemColuna++;
+            }
 
             if (AppState.configuracaoDoApp.Comanda)
             {
@@ -47,15 +84,49 @@ public partial class IniciarPedidoPage : ContentPage
                     BorderColor = Colors.Black
                 };
 
+
+                frameComanda.GestureRecognizers.Add(swipeLeftGesture);
                 var tapGestureRecognizer = new TapGestureRecognizer();
                 tapGestureRecognizer.Tapped += async (s, e) =>
                 {
-                    AppState.NumeroDaComanda = "000000";
+                    try
+                    {
+                        var NumComanda = await DisplayPromptAsync("Digite o número da comanda", null, "OK", null, keyboard: Keyboard.Numeric, maxLength: 6);
 
-                    if (!AppState.configuracaoDoApp.ListaPorGrupo)
-                        await Navigation.PushAsync(new NavigationPage(new ProdutosPage(null)));
-                    else
-                        await Navigation.PushAsync(new NavigationPage(new GruposPage()));
+                        if (!String.IsNullOrEmpty(NumComanda))
+                        {
+                            var comanda = AppState.MesasNaMemoria!.FirstOrDefault(x => x.Cartao == NumComanda.PadLeft(6, '0'));
+
+                            if (comanda is not null)
+                            {
+                                if (comanda.Bloqueado)
+                                {
+                                    throw new Exception("Comanda Bloquada, por favor escolha outra comanda");
+                                }
+
+                                if (AppState.ContasNaMemoria!.Any(x => x.Mesa == comanda.Codigo && x.Status != "P" && x.Status == "F"))
+                                {
+                                    throw new Exception("Comanda Fechada, por favor escolha outra comanda");
+                                }
+                            }
+                        }
+                        else
+                        {
+                            throw new Exception("Por favor escolha um número de comanda");
+                        }
+
+                        AppState.NumeroDaComanda = $"{NumComanda}";
+
+                        if (!AppState.configuracaoDoApp.ListaPorGrupo)
+                            await Navigation.PushAsync(new NavigationPage(new ProdutosPage(null)));
+                        else
+                            await Navigation.PushAsync(new NavigationPage(new GruposPage()));
+                    }
+                    catch (Exception ex)
+                    {
+                        await DisplayAlert("Erro", ex.Message, "Ok");
+                    }
+
                 };
                 frameComanda.GestureRecognizers.Add(tapGestureRecognizer);
 
@@ -74,12 +145,24 @@ public partial class IniciarPedidoPage : ContentPage
 
             foreach (var mesa in mesasOuComandas!)
             {
+                if (!AppState.EBalcao)
+                {
+                    if (mesa.Codigo!.Contains("B", StringComparison.OrdinalIgnoreCase))
+                        continue;
+                }
+                else
+                {
+                    if (!mesa.Codigo!.Contains("B", StringComparison.OrdinalIgnoreCase))
+                        continue;
+                }
+
+
                 if (ContagemColuna > 2)
                     ContagemColuna = 0;
 
                 var frame = new Frame();
                 var LblNumeroDeMesa = new Label { Text = mesa.Codigo, HorizontalOptions = LayoutOptions.Center, FontFamily = "OpenSansSemibold", FontSize = 17, TextColor = Color.Parse("#fff") };
-               
+
 
                 if (AppState.configuracaoDoApp.Mesa)
                 {
@@ -96,9 +179,9 @@ public partial class IniciarPedidoPage : ContentPage
                     frame.BackgroundColor = Color.Parse("#3B8112");
                     frame.BorderColor = Colors.Black;
                 }
-                
 
-                var MesaAtualOcupada = AppState.ContasNaMemoria!.Any(x => x.Mesa == mesa.Codigo );
+
+                var MesaAtualOcupada = AppState.ContasNaMemoria!.Any(x => x.Mesa == mesa.Codigo);
 
                 if (MesaAtualOcupada)
                 {
@@ -109,7 +192,7 @@ public partial class IniciarPedidoPage : ContentPage
                         if (MesaNoContas.Status == "F")
                         {
                             frame.BackgroundColor = Color.Parse("Yellow");
-                            LblNumeroDeMesa.TextColor = Color.Parse("#000");    
+                            LblNumeroDeMesa.TextColor = Color.Parse("#000");
                         }
 
                         if (MesaNoContas.Status == "A")
@@ -146,6 +229,16 @@ public partial class IniciarPedidoPage : ContentPage
                             case "Seguir com outro pedido para essa Comanda":
                                 // Ação para desbloquear a mesa
                                 AppState.NumeroDaComanda = mesa.Cartao;
+                                AppState.Repetido = true;
+
+                                var CodDoCartao = AppState.MesasNaMemoria!.FirstOrDefault(x => x.Cartao == mesa.Cartao)!.Codigo;
+                                var MesaNoContas = AppState.ContasNaMemoria!.FirstOrDefault(x => x.Mesa == CodDoCartao && x.Status != "P");
+
+                                if (MesaNoContas is not null)
+                                {
+                                    if (MesaNoContas.Cliente is not null)
+                                        AppState.NomeClienteRepitido = MesaNoContas.Cliente;
+                                }
 
                                 if (!AppState.configuracaoDoApp.ListaPorGrupo)
                                     await Navigation.PushAsync(new NavigationPage(new ProdutosPage(null)));
@@ -181,6 +274,8 @@ public partial class IniciarPedidoPage : ContentPage
                 };
 
                 frame.GestureRecognizers.Add(tapGestureRecognizer);
+                frame.GestureRecognizers.Add(swipeLeftGesture);
+
 
                 Grid.SetColumn(frame, ContagemColuna);
                 Grid.SetRow(frame, ContagemDeLinhaReal);
@@ -212,4 +307,6 @@ public partial class IniciarPedidoPage : ContentPage
     {
         ((FlyoutPage)App.Current.MainPage).Detail = new NavigationPage(new Carrinho());
     }
+
+
 }

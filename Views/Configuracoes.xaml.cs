@@ -29,13 +29,15 @@ public partial class Configuracoes : ContentPage
                 frameFormaDeLancamento.IsVisible = false;
                 frameDeRequisicao.IsVisible = false;
                 frameDeFormaPrincipal.IsVisible = false;
-                FrameDeTempoDeEspera.IsVisible = false; 
+                FrameDeTempoDeEspera.IsVisible = false;
+                FrameUltilizaBalcao.IsVisible = false;
             }
             else
             {
                 AtualizaFrameDeRadioButtonsDeRequisicao();
                 AtualizaFrameDeRadioButtonsDeListagemDeProdutos();
                 AtualizaFrameDeRadioButtonsDeFormaPrincipal();
+                AtualizaFrameDeUltilizaBalcao();
                 AtualizaEntryDeTempoDeEspera();
             }
 
@@ -150,6 +152,15 @@ public partial class Configuracoes : ContentPage
 
     }
 
+    private void AtualizaFrameDeUltilizaBalcao()
+    {
+        var configs = AppState.configuracaoDoApp;
+
+        if (configs.UsaBalcao)
+            radioUltilizaBalcao.IsChecked = true;
+        else
+            radioNaoUltilizaBalcao.IsChecked = true;
+    }
 
     private void DefineEscolhaNoDbDeRequisicaoEFormaDeLancamento(string? opcEscolhinda)
     {
@@ -196,6 +207,12 @@ public partial class Configuracoes : ContentPage
                         db.configappgarcom.FirstOrDefault()!.ListaDeItens = false;
                         db.configappgarcom.FirstOrDefault()!.BuscaDeItens = false;
                         db.configappgarcom.FirstOrDefault()!.ListaPorGrupo = true;
+                        break;
+                    case "Sim":
+                        db.configappgarcom.FirstOrDefault()!.UsaBalcao = true;
+                        break;
+                    case "Não":
+                        db.configappgarcom.FirstOrDefault()!.UsaBalcao = false;
                         break;
                 }
 

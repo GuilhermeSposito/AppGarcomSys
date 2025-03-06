@@ -19,6 +19,11 @@ public partial class ModalDePedidoEnviado : ContentPage
     {
         try
         {
+            var tapGesture = new TapGestureRecognizer();
+            tapGesture.Tapped += TapDePedidoEnviado_Tapped;
+
+            
+
             bool pedidoLido = false;
             int contador = 1;
 
@@ -49,7 +54,10 @@ public partial class ModalDePedidoEnviado : ContentPage
             {
                 CarregandoIndicador.IsRunning = false;
                 LayoutDePedidoConcluido.IsVisible = true;
+                AppState.SetaInfosDeBalcao();
+                AppState.SetaInfosDePedidoRepitido();
                 AppState.ProdutosCarrinho!.Clear();
+                MajorLayout.GestureRecognizers.Add(tapGesture);
             }
             else
             {
@@ -97,6 +105,8 @@ public partial class ModalDePedidoEnviado : ContentPage
 
                 CarregandoIndicador.IsRunning = false;
                 LayoutDePedidoNaoEnviado.IsVisible = true;
+
+                MajorLayout.GestureRecognizers.Add(tapGesture);
             }
 
 

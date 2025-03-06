@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AppGarcomSys.Views.IniciarPedidoPage"
              Title="Iniciar Pedido"
+             
            >
     <ScrollView>
         <Grid x:Name="GridDeMesas" RowSpacing="10" ColumnDefinitions="3*,3*,3*" Margin="10" ColumnSpacing="5" Padding="5">

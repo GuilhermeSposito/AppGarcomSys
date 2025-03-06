@@ -7,7 +7,6 @@ using System.Runtime.CompilerServices;
 using System.ComponentModel;
 using System.Text.Json;
 using AppGarcomSys.Views.Modais;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace AppGarcomSys.Views;
 
@@ -76,7 +75,7 @@ public partial class Carrinho : ContentPage
 
         if (entry == entryDeComanda && entry.IsVisible)
         {
-            AppState.NumeroDaComanda = entry.Text.PadLeft(6, '0');
+            AppState.NumeroDaComanda = entry.Text;
         }
         else if (entry == entryDeMesa && entry.IsVisible)
         {
@@ -157,23 +156,40 @@ public partial class Carrinho : ContentPage
                     FrameDePedidoAberto.IsVisible = false;
                     FrameDePedidoAindaNAberto.IsVisible = true;
                     borderDeNomeDoGarcomFixo.IsVisible = false;
+                    AppState.SetaInfosDeBalcao();
                     await Task.Delay(100);
                 }
                 else
                 {
                     if (entryDeComanda.IsVisible)
                     {
-                        entryDeComanda.Text = AppState.NumeroDaComanda!.PadLeft(6, '0');
+                        if (AppState.EBalcao)
+                        {
+                            entryDeComanda.IsVisible = false;
+                            lblComanda.Text = "Balcão";
+                        }
+                        else
+                        {
+                            entryDeComanda.Text = AppState.NumeroDaComanda!;
+                        }
                     }
                     else
                     {
-                        entryDeMesa.Text = AppState.NumeroDaMesa.ToString().PadLeft(4, '0');
+                        if (AppState.EBalcao)
+                        {
+                            entryDeMesa.IsVisible = false;
+                            lblMesa.Text = "Balcão";
+                        }
+                        else
+                        {
+                            entryDeMesa.Text = AppState.NumeroDaMesa.ToString().PadLeft(4, '0');
+                        }
+
                     }
 
                     FrameDePedidoAberto.IsVisible = true;
                     FrameDePedidoAindaNAberto.IsVisible = false;
                     FrameDeProdutosNoCarrinho.IsVisible = true;
-
                     LayoutDeProdutosNoCarrinho.Clear();
                     CriaFramesDeProdutos(AppState.ProdutosCarrinho, LayoutDeProdutosNoCarrinho);
 
@@ -383,7 +399,7 @@ public partial class Carrinho : ContentPage
             {
                 BtnMais.IsEnabled = false;
                 BtnMenos.IsEnabled = false;
-                await Navigation.PushAsync(new NavigationPage(new ModalDeIncrementos(produto.Codigo)));
+                await Navigation.PushAsync(new NavigationPage(new ModalDeIncrementos(produto.Codigo, codigoInternoDoProduto: produto.IdInterno)));
 
             };
 
@@ -391,7 +407,7 @@ public partial class Carrinho : ContentPage
             {
                 BtnMenos.IsEnabled = false;
                 BtnMais.IsEnabled = false;
-                await Navigation.PushAsync(new NavigationPage(new ModalDeDecremento(produto.Codigo)));
+                await Navigation.PushAsync(new NavigationPage(new ModalDeDecremento(produto.Codigo, codigoInternoDoProduto: produto.IdInterno)));
             };
 
             Grid.SetColumn(LayoutDeButtonsIncrementos, 1);
@@ -538,7 +554,13 @@ public partial class Carrinho : ContentPage
 
     private async void BtnAbrirPedido_Clicked(object sender, EventArgs e)
     {
+        BtnAbrirPedido.IsEnabled = false;
+        await AppState.CarregarContas()!;
+
         await Navigation.PushAsync(new NavigationPage(new IniciarPedidoPage()));
+
+        BtnAbrirPedido.IsEnabled = true;
+        
     }
 
     protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
@@ -553,7 +575,7 @@ public partial class Carrinho : ContentPage
         if (action == "Sim")
         {
             AppState.ProdutosCarrinho!.Clear();
-
+            AppState.EBalcao = false;
 
             ((FlyoutPage)App.Current.MainPage).Detail = new NavigationPage(new Carrinho());
         }
@@ -564,22 +586,51 @@ public partial class Carrinho : ContentPage
     {
         try
         {
+            BtnFecharPedido.IsEnabled = false;
+
             using (AppDbContext db = new AppDbContext())
             {
                 if (AppState.configuracaoDoApp.Mesa)
                 {
-                    if (AppState.NumeroDaMesa == 0)
+                    if (AppState.NumeroDaMesa == 0 && !AppState.EBalcao)
                     {
                         throw new Exception("Informe o número da mesa");
+                    }
+                    else if (AppState.EBalcao == true) //aqui envia um pedido balcão 
+                    {  
+                        await EnviaPedido(eBalcao: true, AppState.BalcaoInfos);
+                    }
+                    else if (!AppState.EBalcao)
+                    {
+                        await EnviaPedido(eBalcao: false);
                     }
                 }
                 else
                 {
-                    if (AppState.NumeroDaComanda is null || AppState.NumeroDaComanda == "000000")
+                    if (AppState.NumeroDaComanda is null || AppState.NumeroDaComanda == "000000" || AppState.NumeroDaComanda == "0" && !AppState.EBalcao)
                     {
                         throw new Exception("Informe o número da comanda");
                     }
+                    else if (!AppState.EBalcao)
+                    {
+                        Mesa? Comanda = AppState.MesasNaMemoria!.FirstOrDefault(x => x.Cartao == AppState.NumeroDaComanda.PadLeft(6, '0'))!;
 
+                        if (Comanda is not null)
+                        {
+                            if (Comanda.Bloqueado)
+                            {
+                                throw new Exception("Comanda bloqueada, não é possível enviar o pedido!");
+                            }
+                            else
+                            {
+                                await EnviaPedido(eBalcao: false);
+                            }
+                        }
+                    }
+                    else //aqui envia um pedido balcão 
+                    {
+                        await EnviaPedido(eBalcao: true, AppState.BalcaoInfos);
+                    }
                 }
 
                 if (AppState.ProdutosCarrinho!.Count == 0)
@@ -587,12 +638,63 @@ public partial class Carrinho : ContentPage
                     throw new Exception("Adicione produtos ao carrinho para poder enviar o pedido!");
                 }
 
+                // await EnviaPedido(eBalcao: false);
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Pedido", ex.Message, "Ok");
+
+        }
+        finally
+        {
+            BtnFecharPedido.IsEnabled = true;
+        }
+    }
+
+    private async void BtnVerPedidos_Clicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new NavigationPage(new PageVerPedidos()));
+    }
+
+    private async Task EnviaPedido(bool eBalcao, Balcao? Balcao = null)
+    {
+        try
+        {
+            using (AppDbContext db = new AppDbContext())
+            {
+                string? NomeCliente = String.Empty;
+
+                if (!eBalcao && AppState.configuracaoDoApp.Comanda && !AppState.Repetido)
+                {
+                    var nome = await DisplayPromptAsync("Pedido de Comanda. Informe o nome do cliente:", null, "Ok", "Não", null, maxLength: 30);
+                    if (nome is not null)
+                        NomeCliente = nome;
+                }else if (eBalcao)
+                {
+                    if (!AppState.BalcaoInfos.Repetido)
+                    {
+                        var nome = await DisplayPromptAsync("Pedido de Balcão. Informe o nome do cliente:", null, "Ok", "Não", null, maxLength: 30);
+
+                        AppState.BalcaoInfos.NomeCliente = nome;
+                    }
+                }
+
+                if (!eBalcao && AppState.Repetido)
+                {
+                    if (!String.IsNullOrEmpty(AppState.NomeClienteRepitido))
+                        NomeCliente = AppState.NomeClienteRepitido!;
+                }
+
                 var Pedido = new Pedido
                 {
-                    Mesa = AppState.NumeroDaMesa.ToString().PadLeft(4, '0'),   
+                    Mesa = AppState.NumeroDaMesa.ToString().PadLeft(4, '0'),
                     Comanda = AppState.NumeroDaComanda!.PadLeft(6, '0'),
+                    NomeClienteNaMesa = NomeCliente,
                     GarcomResponsavel = AppState.GarconLogado!.Codigo,
-                    produtos = AppState.ProdutosCarrinho!
+                    produtos = AppState.ProdutosCarrinho!,
+                    EBalcao = eBalcao,
+                    BalcaoInfos = Balcao
                 };
 
                 string? PedidoJson = JsonSerializer.Serialize(Pedido);
@@ -604,13 +706,10 @@ public partial class Carrinho : ContentPage
                     Tipo = "pedido"
                 };
 
-                //await DisplayAlert("Pedido", CarrinhoJson, "Ok");
-
                 await db.apoioappgarcom.AddAsync(NovoPedido);
                 await db.SaveChangesAsync();
 
                 await Navigation.PushModalAsync(new NavigationPage(new ModalDePedidoEnviado(NovoPedido.Id)));
-
 
                 ((FlyoutPage)App.Current.MainPage).Detail = new NavigationPage(new Carrinho());
             }
@@ -618,12 +717,6 @@ public partial class Carrinho : ContentPage
         catch (Exception ex)
         {
             await DisplayAlert("Pedido", ex.Message, "Ok");
-
         }
-    }
-
-    private async void BtnVerPedidos_Clicked(object sender, EventArgs e)
-    {
-        await Navigation.PushAsync(new NavigationPage(new PageVerPedidos()));
     }
 }

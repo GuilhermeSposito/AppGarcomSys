@@ -110,53 +110,64 @@ public partial class ProdutosPage : ContentPage
                 {
                     if (produto.Fracionado == "N" && QtdFracionado == 0)
                     {
-                        if (AppState.ProdutosCarrinho!.Any(x => x.Codigo == produto.Codigo))
+
+                        var ProdutoAdicionado = new Produto
                         {
-                            var produtoExistente = AppState.ProdutosCarrinho!.FirstOrDefault(x => x.Codigo == produto.Codigo && x.Codigo2 == produto.Codigo2 && x.Codigo3 == produto.Codigo3);
+                            Codigo = produto.Codigo,
+                            Descricao = produto.Descricao,
+                            Grupo = produto.Grupo,
+                            Preco1 = produto.Preco1,
+                            Preco2 = produto.Preco2,
+                            Preco3 = produto.Preco3,
+                            OcultaTablet = produto.OcultaTablet,
+                            Observacao = produto.Observacao,
+                            Quantidade = produto.Quantidade,
+                            TamanhoUnico = produto.TamanhoUnico
+                        };
 
-                            if (produtoExistente != null)
-                            {
-                                produtoExistente.Quantidade++;
-                            }
-                        }
-                        else
+                        Tamanhos? TamanhoProduto = await GeraDisplayParaPerguntaDeTamanho(ProdutoAdicionado);
+
+                        if (TamanhoProduto is not null)
+                            ProdutoAdicionado.Tamanho = TamanhoProduto.ToString();
+
+
+                        if (AppState.configuracaoDoApp.RequisicaoAlfaNumerica)
                         {
-                            var ProdutoAdicionado = new Produto
+                            string? InitialValue = "";
+
+                            if (AppState.ProdutosCarrinho is not null)
                             {
-                                Codigo = produto.Codigo,
-                                Descricao = produto.Descricao,
-                                Grupo = produto.Grupo,
-                                Preco1 = produto.Preco1,
-                                Preco2 = produto.Preco2,
-                                Preco3 = produto.Preco3,
-                                OcultaTablet = produto.OcultaTablet,
-                                Observacao = produto.Observacao,
-                                Quantidade = produto.Quantidade,
-                                TamanhoUnico = produto.TamanhoUnico
-                            };
-
-                            Tamanhos? TamanhoProduto = await GeraDisplayParaPerguntaDeTamanho(ProdutoAdicionado);
-
-                            if (TamanhoProduto is not null)
-                                ProdutoAdicionado.Tamanho = TamanhoProduto.ToString();
-
-
-                            if (AppState.configuracaoDoApp.RequisicaoAlfaNumerica)
-                            {
-                                var requisicao = await DisplayPromptAsync("Digite o nome na requisição", null, "OK", null, maxLength: 10);
-                                ProdutoAdicionado.Requisicao = $"{requisicao}";
+                                if (AppState.ProdutosCarrinho.Count > 0)
+                                    if (AppState.ProdutosCarrinho.Last() is not null)
+                                    {
+                                        InitialValue = AppState.ProdutosCarrinho.Last().Requisicao;
+                                    }
                             }
 
-                            if (AppState.configuracaoDoApp.RequisicaoNumerica)
-                            {
-                                var requisicao = await DisplayPromptAsync("Digite o número da comanda", null, "OK", null, keyboard: Keyboard.Numeric, maxLength: 10);
-                                ProdutoAdicionado.Requisicao = $"{requisicao}";
-                            }
-
-
-                            AppState.ProdutosCarrinho!.Add(ProdutoAdicionado);
-
+                            var requisicao = await DisplayPromptAsync("Digite o nome", null, "OK", null, maxLength: 10, initialValue: InitialValue);
+                            ProdutoAdicionado.Requisicao = $"{requisicao}";
                         }
+
+                        if (AppState.configuracaoDoApp.RequisicaoNumerica)
+                        {
+                            string? InitialValue = "";
+
+                            if (AppState.ProdutosCarrinho is not null)
+                            {
+                                if (AppState.ProdutosCarrinho.Count > 0)
+                                    if (AppState.ProdutosCarrinho.Last() is not null)
+                                    {
+                                        InitialValue = AppState.ProdutosCarrinho.Last().Requisicao;
+                                    }
+                            }
+
+                            var requisicao = await DisplayPromptAsync("Digite o número da comanda", null, "OK", null, keyboard: Keyboard.Numeric, maxLength: 10, initialValue: InitialValue);
+                            ProdutoAdicionado.Requisicao = $"{requisicao}";
+                        }
+
+
+                        AppState.ProdutosCarrinho!.Add(ProdutoAdicionado);
+
 
                         Navigation.PopAsync();
                         ((FlyoutPage)App.Current.MainPage).Detail = new NavigationPage(new Carrinho());
@@ -222,13 +233,36 @@ public partial class ProdutosPage : ContentPage
 
                                     if (AppState.configuracaoDoApp.RequisicaoAlfaNumerica)
                                     {
-                                        var requisicao = await DisplayPromptAsync("Digite o nome na requisição", null, "OK", null);
+                                        string? InitialValue = "";
+
+                                        if (AppState.ProdutosCarrinho is not null)
+                                        {
+                                            if (AppState.ProdutosCarrinho.Count > 0)
+                                                if (AppState.ProdutosCarrinho.Last() is not null)
+                                                {
+                                                    InitialValue = AppState.ProdutosCarrinho.Last().Requisicao;
+                                                }
+                                        }
+
+                                        var requisicao = await DisplayPromptAsync("Digite o nome", null, "OK", null, maxLength: 10, initialValue: InitialValue);
                                         produtoExistente!.Requisicao = requisicao;
+
                                     }
 
                                     if (AppState.configuracaoDoApp.RequisicaoNumerica)
                                     {
-                                        var requisicao = await DisplayPromptAsync("Digite o número da requisiçaõ", null, "OK", null, keyboard: Keyboard.Numeric);
+                                        string? InitialValue = "";
+
+                                        if (AppState.ProdutosCarrinho is not null)
+                                        {
+                                            if (AppState.ProdutosCarrinho.Count > 0)
+                                                if (AppState.ProdutosCarrinho.Last() is not null)
+                                                {
+                                                    InitialValue = AppState.ProdutosCarrinho.Last().Requisicao;
+                                                }
+                                        }
+
+                                        var requisicao = await DisplayPromptAsync("Digite o número da comanda", null, "OK", null, keyboard: Keyboard.Numeric, maxLength: 10, initialValue: InitialValue);
                                         produtoExistente!.Requisicao = requisicao;
                                     }
 
@@ -302,13 +336,37 @@ public partial class ProdutosPage : ContentPage
 
                                     if (AppState.configuracaoDoApp.RequisicaoAlfaNumerica)
                                     {
-                                        var requisicao = await DisplayPromptAsync("Digite o nome na requisição", null, "OK", null);
+                                        string? InitialValue = "";
+
+                                        if (AppState.ProdutosCarrinho is not null)
+                                        {
+                                            if (AppState.ProdutosCarrinho.Count > 0)
+                                                if (AppState.ProdutosCarrinho.Last() is not null)
+                                                {
+                                                    InitialValue = AppState.ProdutosCarrinho.Last().Requisicao;
+                                                }
+                                        }
+
+                                        var requisicao = await DisplayPromptAsync("Digite o nome", null, "OK", null, maxLength: 10, initialValue: InitialValue);
                                         produtoExistente!.Requisicao = requisicao;
+
                                     }
 
                                     if (AppState.configuracaoDoApp.RequisicaoNumerica)
                                     {
-                                        var requisicao = await DisplayPromptAsync("Digite o número da requisição", null, "OK", null, keyboard: Keyboard.Numeric);
+
+                                        string? InitialValue = "";
+
+                                        if (AppState.ProdutosCarrinho is not null)
+                                        {
+                                            if (AppState.ProdutosCarrinho.Count > 0)
+                                                if (AppState.ProdutosCarrinho.Last() is not null)
+                                                {
+                                                    InitialValue = AppState.ProdutosCarrinho.Last().Requisicao;
+                                                }
+                                        }
+
+                                        var requisicao = await DisplayPromptAsync("Digite o número da comanda", null, "OK", null, keyboard: Keyboard.Numeric, maxLength: 10, initialValue: InitialValue);
                                         produtoExistente!.Requisicao = requisicao;
                                     }
 
@@ -320,55 +378,62 @@ public partial class ProdutosPage : ContentPage
                         }
                         else if (UserOption == "Sabor inteiro")
                         {
-                            if (AppState.ProdutosCarrinho!.Any(x => x.Codigo == produto.Codigo))
+
+                            var ProdutoAdicionado = new Produto
                             {
-                                var produtoExistente = AppState.ProdutosCarrinho!.FirstOrDefault(x => x.Codigo == produto.Codigo && x.Codigo2 == produto.Codigo2 && x.Codigo3 == produto.Codigo3);
+                                Codigo = produto.Codigo,
+                                Descricao = produto.Descricao,
+                                Grupo = produto.Grupo,
+                                Preco1 = produto.Preco1,
+                                Preco2 = produto.Preco2,
+                                Preco3 = produto.Preco3,
+                                OcultaTablet = produto.OcultaTablet,
+                                Observacao = produto.Observacao,
+                                Quantidade = produto.Quantidade,
+                                TamanhoUnico = produto.TamanhoUnico
+                            };
 
-                                if (produtoExistente != null)
-                                {
-                                    produtoExistente.Quantidade++;
-                                }
-                            }
-                            else
+                            Tamanhos? TamanhoProduto = await GeraDisplayParaPerguntaDeTamanho(ProdutoAdicionado);
+
+                            if (TamanhoProduto is not null)
+                                ProdutoAdicionado.Tamanho = TamanhoProduto.ToString();
+
+
+                            if (AppState.configuracaoDoApp.RequisicaoAlfaNumerica)
                             {
+                                string? InitialValue = "";
 
-                                var ProdutoAdicionado = new Produto
+                                if (AppState.ProdutosCarrinho is not null)
                                 {
-                                    Codigo = produto.Codigo,
-                                    Descricao = produto.Descricao,
-                                    Grupo = produto.Grupo,
-                                    Preco1 = produto.Preco1,
-                                    Preco2 = produto.Preco2,
-                                    Preco3 = produto.Preco3,
-                                    OcultaTablet = produto.OcultaTablet,
-                                    Observacao = produto.Observacao,
-                                    Quantidade = produto.Quantidade,
-                                    TamanhoUnico = produto.TamanhoUnico
-                                };
-
-                                Tamanhos? TamanhoProduto = await GeraDisplayParaPerguntaDeTamanho(ProdutoAdicionado);
-
-                                if (TamanhoProduto is not null)
-                                    ProdutoAdicionado.Tamanho = TamanhoProduto.ToString();
-
-
-                                if (AppState.configuracaoDoApp.RequisicaoAlfaNumerica)
-                                {
-                                    var requisicao = await DisplayPromptAsync("Digite o nome na requisição", null, "OK", null);
-                                    ProdutoAdicionado!.Requisicao = requisicao;
+                                    if (AppState.ProdutosCarrinho.Count > 0)
+                                        if (AppState.ProdutosCarrinho.Last() is not null)
+                                        {
+                                            InitialValue = AppState.ProdutosCarrinho.Last().Requisicao;
+                                        }
                                 }
 
-                                if (AppState.configuracaoDoApp.RequisicaoNumerica)
-                                {
-                                    var requisicao = await DisplayPromptAsync("Digite o número da requisição", null, "OK", null, keyboard: Keyboard.Numeric);
-                                    ProdutoAdicionado!.Requisicao = requisicao;
-                                }
-
-
-                                AppState.ProdutosCarrinho!.Add(ProdutoAdicionado);
-
+                                var requisicao = await DisplayPromptAsync("Digite o nome", null, "OK", null, maxLength: 10, initialValue: InitialValue);
+                                ProdutoAdicionado.Requisicao = $"{requisicao}";
                             }
 
+                            if (AppState.configuracaoDoApp.RequisicaoNumerica)
+                            {
+                                string? InitialValue = "";
+
+                                if (AppState.ProdutosCarrinho is not null)
+                                {
+                                    if (AppState.ProdutosCarrinho.Count > 0)
+                                        if (AppState.ProdutosCarrinho.Last() is not null)
+                                        {
+                                            InitialValue = AppState.ProdutosCarrinho.Last().Requisicao;
+                                        }
+                                }
+
+                                var requisicao = await DisplayPromptAsync("Digite o número da comanda", null, "OK", null, keyboard: Keyboard.Numeric, maxLength: 10, initialValue: InitialValue);
+                                ProdutoAdicionado.Requisicao = $"{requisicao}";
+                            }
+
+                            AppState.ProdutosCarrinho!.Add(ProdutoAdicionado);
 
                             Navigation.PopAsync();
                             ((FlyoutPage)App.Current.MainPage).Detail = new NavigationPage(new Carrinho());

@@ -36,13 +36,7 @@
 
                     <Grid x:Name="GridDeMesaEComanda" Margin="0,5,0,0" ColumnDefinitions="5*,5*" RowDefinitions="50,15">
 
-                       <!-- <Entry ReturnType="Done" Grid.ColumnSpan="2" x:Name="lblNumeroMesa" MaxLength="3" TextColor="White" HorizontalTextAlignment="Center" Keyboard="Numeric" ClearButtonVisibility="WhileEditing"  Grid.Column="0" Grid.Row="0"/>
-                        <Entry ReturnType="Done"  IsVisible="False" x:Name="entryComanda" TextColor="White" HorizontalTextAlignment="Center" ClearButtonVisibility="WhileEditing"  Grid.Column="1" Grid.Row="0"/>
-                       -->
-                        <!-- <Label TextColor="White" Grid.ColumnSpan="2" FontFamily="OpenSansSemibold" Text="Mesa" HorizontalOptions="Center" Grid.Column="0" Grid.Row="1"/>
-                        <Label TextColor="White" x:Name="lblComanda" FontFamily="OpenSansSemibold" Text="Comanda" HorizontalOptions="Center"  Grid.Column="1" Grid.Row="1"/>
-                         -->
-
+ 
 
                     </Grid>
 

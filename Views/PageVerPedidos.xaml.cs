@@ -4,6 +4,7 @@ using AppGarcomSys.Models;
 using AppGarcomSys.Views.Modais;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace AppGarcomSys.Views;
 
 public partial class PageVerPedidos : ContentPage
@@ -28,6 +29,8 @@ public partial class PageVerPedidos : ContentPage
         {
             await AppState.CarregarContas();
 
+            await Task.Delay(2000);
+
             CarregandoIndicador.IsRunning = false;
             CarregandoIndicador.IsVisible = false;
 
@@ -35,7 +38,7 @@ public partial class PageVerPedidos : ContentPage
             int ContagemDeLinhaReal = 0;
             List<Mesa> mesasOuComandas = new List<Mesa>();
 
-            List<Contas> ocupadas = AppState.ContasNaMemoria!.Where(x => x.Status != "P").OrderBy(x => int.Parse(x.Mesa!)).ToList();
+            List<Contas> ocupadas = AppState.ContasNaMemoria!.Where(x => x.Status != "P").OrderBy(x => int.TryParse(x.Mesa!, out int result)).ToList();
 
             foreach (var item in ocupadas)
             {
@@ -50,7 +53,7 @@ public partial class PageVerPedidos : ContentPage
 
                 var frame = new Frame();
                 var LblNumeroDeMesa = new Label { Text = mesa.Codigo, HorizontalOptions = LayoutOptions.Center, FontFamily = "OpenSansSemibold", FontSize = 17, TextColor = Color.Parse("#fff") };
-
+                string? NomeClienteCasoForBalcao = " ";
 
                 if (AppState.configuracaoDoApp.Mesa)
                 {
@@ -68,7 +71,7 @@ public partial class PageVerPedidos : ContentPage
                     frame.BorderColor = Colors.Black;
                 }
 
-
+              
                 var MesaAtualOcupada = AppState.ContasNaMemoria!.Any(x => x.Mesa == mesa.Codigo);
 
                 if (MesaAtualOcupada)
@@ -77,6 +80,16 @@ public partial class PageVerPedidos : ContentPage
 
                     if (MesaNoContas is not null)
                     {
+                        if (MesaNoContas.Mesa!.Contains("B"))
+                        {
+                            if (!String.IsNullOrEmpty(MesaNoContas.Cliente!.Trim()))
+                            {
+                                NomeClienteCasoForBalcao = MesaNoContas.Cliente;    
+                                LblNumeroDeMesa.Text += $" / {MesaNoContas.Cliente}";
+                            }
+                        }
+
+
                         if (MesaNoContas.Status == "F")
                         {
                             frame.BackgroundColor = Color.Parse("Yellow");
@@ -94,7 +107,17 @@ public partial class PageVerPedidos : ContentPage
 
                 tapGestureRecognizer.Tapped += async (s, e) =>
                 {
-                    var escolhaGarcom = await DisplayActionSheet("Forma de visualização", null, null, ["Resumida", "Completa"]);
+                    string escolhaGarcom;
+
+                    if (mesa.Codigo!.Contains("B") && frame.BackgroundColor != Color.Parse("Yellow"))
+                    {
+                        escolhaGarcom = await DisplayActionSheet("Forma de visualização", null, null, ["Resumida", "Completa", "Adicionar itens"]);
+                    }
+                    else
+                    {
+                        escolhaGarcom = await DisplayActionSheet("Forma de visualização", null, null, ["Resumida", "Completa"]);
+
+                    }
 
                     switch (escolhaGarcom)
                     {
@@ -107,6 +130,13 @@ public partial class PageVerPedidos : ContentPage
                             NumeroDaMesaOuComanda = mesa.Codigo;
                             LayoutContainer.Children.Clear();
                             await ColocaGruposDaMesaNaTela(mesa.Codigo);
+                            break;
+                        case "Adicionar itens":
+                            ColocaInformacoesDeBalcao(mesa.Codigo, NomeCliente: NomeClienteCasoForBalcao);
+                            if (!AppState.configuracaoDoApp.ListaPorGrupo)
+                                await Navigation.PushAsync(new NavigationPage(new ProdutosPage(null)));
+                            else
+                                await Navigation.PushAsync(new NavigationPage(new GruposPage()));
                             break;
                         default:
                             break;
@@ -140,6 +170,14 @@ public partial class PageVerPedidos : ContentPage
         }
     }
 
+    private void ColocaInformacoesDeBalcao(string CodBalcao,string? NomeCliente)
+    {
+        AppState.EBalcao = true;
+        AppState.BalcaoInfos.Repetido = true;
+        AppState.BalcaoInfos.NomeCliente = NomeCliente;
+        AppState.BalcaoInfos!.CodBalcao = CodBalcao;
+    }
+
     private async Task ColocaGruposDaMesaNaTela(string? numeroDaMesaOuComanda)
     {
         try
@@ -167,7 +205,7 @@ public partial class PageVerPedidos : ContentPage
                 FrameDeMesa.Content = LayoutDeMesa;
                 LayoutContainer.Children.Add(FrameDeMesa);
 
-                CriaFramesDeContasResumida(contas, new VerticalStackLayout());
+                await CriaFramesDeContasResumida(contas, new VerticalStackLayout());
             }
         }
         catch (Exception ex)

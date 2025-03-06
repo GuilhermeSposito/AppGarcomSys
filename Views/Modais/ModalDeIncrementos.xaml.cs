@@ -6,12 +6,13 @@ namespace AppGarcomSys.Views.Modais;
 public partial class ModalDeIncrementos : ContentPage
 {
     public string? CodigoDoProduto { get; set; }
+    public Guid? CodigoInternoDoProduto { get; set; }
     public List<Incremento> IncrementosSelecionados { get; set; }
 
-    public ModalDeIncrementos(string? CodProduto)
+    public ModalDeIncrementos(string? CodProduto, Guid codigoInternoDoProduto)
     {
         CodigoDoProduto = CodProduto;
-
+        CodigoInternoDoProduto = codigoInternoDoProduto;
         InitializeComponent();
     }
 
@@ -113,7 +114,7 @@ public partial class ModalDeIncrementos : ContentPage
 
                 if (AppState.ProdutosCarrinho!.Any(x => x.Codigo == CodigoDoProduto))
                 {
-                    var produtoExistente = AppState.ProdutosCarrinho!.FirstOrDefault(x => x.Codigo == CodigoDoProduto);
+                    var produtoExistente = AppState.ProdutosCarrinho!.FirstOrDefault(x => x.IdInterno == CodigoInternoDoProduto);
 
                     if (produtoExistente != null)
                     {

@@ -301,3 +301,4 @@ C:\SAAB\ProgAppGarcom\AppGarcomSys\AppGarcomSys\obj\Release\net8.0-maccatalyst\m
 C:\SAAB\ProgAppGarcom\AppGarcomSys\AppGarcomSys\obj\Release\net8.0-maccatalyst\maccatalyst-x64\AppGarcomSys.pdb
 C:\SAAB\ProgAppGarcom\AppGarcomSys\AppGarcomSys\obj\Release\net8.0-maccatalyst\maccatalyst-x64\AppGarcomSys.genruntimeconfig.cache
 C:\SAAB\ProgAppGarcom\AppGarcomSys\AppGarcomSys\obj\Release\net8.0-maccatalyst\maccatalyst-x64\ref\AppGarcomSys.dll
+C:\SAAB\ProgAppGarcom\AppGarcomSys\AppGarcomSys\obj\Release\net8.0-maccatalyst\maccatalyst-x64\mauiimage.outputs

@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AppGarcomSys.Views.Modais.ModalDePedidoEnviado"
              Title="Pedido">
-    <VerticalStackLayout BackgroundColor="White">
+    <VerticalStackLayout x:Name="MajorLayout" BackgroundColor="White">
 
         <VerticalStackLayout Margin="0,200" IsVisible="False" x:Name="LayoutDePedidoConcluido" BackgroundColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
 
@@ -25,8 +25,8 @@
         <ActivityIndicator Margin="0,300" x:Name="CarregandoIndicador" IsRunning="true" />
 
 
-        <VerticalStackLayout.GestureRecognizers>
+        <!--<VerticalStackLayout.GestureRecognizers>
             <TapGestureRecognizer x:Name="TapDePedidoEnviado" Tapped="TapDePedidoEnviado_Tapped" />
-        </VerticalStackLayout.GestureRecognizers>
+        </VerticalStackLayout.GestureRecognizers>-->
     </VerticalStackLayout>
 </ContentPage>

@@ -22,13 +22,28 @@ public static class AppState
     public static List<IncrementoCardapio>? IncrementoCardapioNaMemoria { get; set; } //IncrementoCardapio Já carregados na memória do aplicativo
     public static List<Garcom>? GarconsNaMemoria { get; set; } //Garçons Já carregados na memória do aplicativo
     public static Garcom? GarconLogado { get; set; } //Garçom logado no sistema
-
+    public static bool Repetido { get; set; } = false;
+    public static string? NomeClienteRepitido { get; set; } = String.Empty;
     public static int NumeroDaMesa { get; set; } = 0;//Número da mesa selecionada
-    public static string? NumeroDaComanda { get; set; } = "0"; //Número da mesa selecionada 
+    public static string? NumeroDaComanda { get; set; } = "0"; //Número da mesa selecionada 7
+    public static bool EBalcao { get; set; } = false; //fala se é balcão ou não
+    public static Balcao BalcaoInfos { get; set; } = new Balcao();
     public static List<Produto>? ProdutosCarrinho { get; set; } = new List<Produto>(); //Produtos no carrinho
 
     public static List<Contas> ContasNaMemoria { get; set; } = new List<Contas>(); //Contas Já carregadas na memória do aplicativo
     public static ConfigAppGarcom configuracaoDoApp { get; set; } = new ConfigAppGarcom(); //Configurações do aplicativo
+
+    public static void SetaInfosDeBalcao()
+    {
+        AppState.BalcaoInfos = new Balcao();
+        AppState.EBalcao = false;
+    }
+
+    public static void SetaInfosDePedidoRepitido()
+    {
+        AppState.Repetido = false;
+        AppState.NomeClienteRepitido = String.Empty;
+    }
 
     public async static Task<string>? CarregarConfigs()
     {
@@ -76,7 +91,7 @@ public static class AppState
         {
             await using (AppDbContext db = new AppDbContext())
             {
-                ContasNaMemoria = db.contas.ToList();
+                ContasNaMemoria = await db.contas.ToListAsync();
             }
         }
         catch (Exception ex)
