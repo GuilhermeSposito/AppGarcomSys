@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "dGX8OmPAyCc=",
+  "dgSpecHash": "aQ2OEdKYnkw=",
   "success": true,
   "projectFilePath": "C:\\SAAB\\ProgAppGarcom\\AppGarcomSys\\AppGarcomSys\\AppGarcomSys.csproj",
   "expectedPackageFiles": [
@@ -127,9 +127,14 @@
     "C:\\Users\\gui-c\\.nuget\\packages\\microsoft.android.runtime.34.android-x86\\34.0.145\\microsoft.android.runtime.34.android-x86.34.0.145.nupkg.sha512",
     "C:\\Users\\gui-c\\.nuget\\packages\\microsoft.ios.ref.net8.0_18.0\\18.0.8314\\microsoft.ios.ref.net8.0_18.0.18.0.8314.nupkg.sha512",
     "C:\\Users\\gui-c\\.nuget\\packages\\microsoft.ios.runtime.iossimulator-x64.net8.0_18.0\\18.0.8314\\microsoft.ios.runtime.iossimulator-x64.net8.0_18.0.18.0.8314.nupkg.sha512",
+    "C:\\Users\\gui-c\\.nuget\\packages\\microsoft.maccatalyst.runtime.maccatalyst-arm64.net8.0_18.0\\18.0.8314\\microsoft.maccatalyst.runtime.maccatalyst-arm64.net8.0_18.0.18.0.8314.nupkg.sha512",
     "C:\\Users\\gui-c\\.nuget\\packages\\microsoft.maccatalyst.runtime.maccatalyst-x64.net8.0_18.0\\18.0.8314\\microsoft.maccatalyst.runtime.maccatalyst-x64.net8.0_18.0.18.0.8314.nupkg.sha512",
     "C:\\Users\\gui-c\\.nuget\\packages\\microsoft.maccatalyst.ref.net8.0_18.0\\18.0.8314\\microsoft.maccatalyst.ref.net8.0_18.0.18.0.8314.nupkg.sha512",
-    "C:\\Users\\gui-c\\.nuget\\packages\\microsoft.windows.sdk.net.ref\\10.0.19041.54\\microsoft.windows.sdk.net.ref.10.0.19041.54.nupkg.sha512"
+    "C:\\Users\\gui-c\\.nuget\\packages\\microsoft.netcore.app.crossgen2.win-x64\\8.0.11\\microsoft.netcore.app.crossgen2.win-x64.8.0.11.nupkg.sha512",
+    "C:\\Users\\gui-c\\.nuget\\packages\\microsoft.windows.sdk.net.ref\\10.0.19041.54\\microsoft.windows.sdk.net.ref.10.0.19041.54.nupkg.sha512",
+    "C:\\Users\\gui-c\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x64\\8.0.11\\microsoft.aspnetcore.app.runtime.win-x64.8.0.11.nupkg.sha512",
+    "C:\\Users\\gui-c\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x64\\8.0.11\\microsoft.windowsdesktop.app.runtime.win-x64.8.0.11.nupkg.sha512",
+    "C:\\Users\\gui-c\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x64\\8.0.11\\microsoft.netcore.app.runtime.win-x64.8.0.11.nupkg.sha512"
   ],
   "logs": [
     {
@@ -145,6 +150,7 @@
         "net8.0-android34.0/android-x64",
         "net8.0-android34.0/android-x86",
         "net8.0-android34.0/iossimulator-x64",
+        "net8.0-android34.0/maccatalyst-arm64",
         "net8.0-android34.0/maccatalyst-x64",
         "net8.0-android34.0/win10-x64",
         "net8.0-ios18.0",
@@ -153,6 +159,7 @@
         "net8.0-ios18.0/android-x64",
         "net8.0-ios18.0/android-x86",
         "net8.0-ios18.0/iossimulator-x64",
+        "net8.0-ios18.0/maccatalyst-arm64",
         "net8.0-ios18.0/maccatalyst-x64",
         "net8.0-ios18.0/win10-x64",
         "net8.0-maccatalyst18.0",
@@ -161,6 +168,7 @@
         "net8.0-maccatalyst18.0/android-x64",
         "net8.0-maccatalyst18.0/android-x86",
         "net8.0-maccatalyst18.0/iossimulator-x64",
+        "net8.0-maccatalyst18.0/maccatalyst-arm64",
         "net8.0-maccatalyst18.0/maccatalyst-x64",
         "net8.0-maccatalyst18.0/win10-x64",
         "net8.0-windows10.0.19041",
@@ -169,6 +177,7 @@
         "net8.0-windows10.0.19041/android-x64",
         "net8.0-windows10.0.19041/android-x86",
         "net8.0-windows10.0.19041/iossimulator-x64",
+        "net8.0-windows10.0.19041/maccatalyst-arm64",
         "net8.0-windows10.0.19041/maccatalyst-x64",
         "net8.0-windows10.0.19041/win10-x64"
       ]

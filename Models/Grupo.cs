@@ -15,6 +15,6 @@ namespace AppGarcomSys.Models
         [Column("familia")] public string? Familia { get; set; }
         [Column("ocultatablet")] public bool Oculta { get; set; }
         [Column("totgrupo")] public double TOTGRUPO { get; set; }
-        [NotMapped]public int Qtdade { get; set; }
+        [NotMapped]public float Qtdade { get; set; }
     }
 }

@@ -67,15 +67,22 @@ public partial class IniciarPedidoPage : ContentPage
 
             if (AppState.configuracaoDoApp.Comanda)
             {
-                var ocupadas = AppState.ContasNaMemoria!.Where(x => x.Status != "P").ToList();
+
+                var ocupadas = AppState.ContasNaMemoria!.Where(x => x.Status != "P" && !x.Mesa!.Contains("B") && !x.Mesa.Contains("E")).ToList();
 
                 foreach (var item in ocupadas)
                 {
-                    if (!mesasOuComandas.Any(x => x.Codigo == item.Mesa))
-                        mesasOuComandas.Add(AppState.MesasNaMemoria!.FirstOrDefault(x => x.Codigo == item.Mesa)!);
+                    Mesa? ComandaOcupada = AppState.MesasNaMemoria!.FirstOrDefault(x => x.Codigo == item.Mesa);
 
-                    mesasOuComandas.OrderBy(x => int.Parse(x.Codigo!));
+                    if (!mesasOuComandas.Any(x => x.Codigo == item.Mesa))
+                    {
+                        if (ComandaOcupada is not null)
+                            mesasOuComandas.Add(ComandaOcupada);
+                    }
+
+                    mesasOuComandas.OrderBy(x => int.TryParse(x.Codigo!, out int result));
                 }
+
 
                 var frameComanda = new Frame
                 {
@@ -298,6 +305,7 @@ public partial class IniciarPedidoPage : ContentPage
         }
         catch (Exception ex)
         {
+            await DisplayAlert("Erro", ex.Message, "OK");
             await Console.Out.WriteLineAsync(ex.ToString());
         }
 

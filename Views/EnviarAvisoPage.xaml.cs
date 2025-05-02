@@ -117,8 +117,19 @@ public partial class EnviarAvisoPage : ContentPage
                 }
                 else
                 {
-                    string NumeroComanda = Convert.ToInt32(mesa.Cartao).ToString();
-                    LblNumeroDeMesa.Text = NumeroComanda;
+                    bool NumeroComanda = int.TryParse(mesa.Cartao, out int result);
+                    string NumeroDoCartaoNaLbl = string.Empty;
+
+                    if (NumeroComanda)
+                    {
+                       NumeroDoCartaoNaLbl = result.ToString();
+                    }
+                    else
+                    {
+                        NumeroDoCartaoNaLbl = mesa.Cartao!;
+                    }
+
+                    LblNumeroDeMesa.Text = NumeroDoCartaoNaLbl;
 
                     frame.Content = LblNumeroDeMesa;
                     frame.BackgroundColor = Color.Parse("#3B8112");

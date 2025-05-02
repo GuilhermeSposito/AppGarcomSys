@@ -43,7 +43,10 @@ public partial class PageVerPedidos : ContentPage
             foreach (var item in ocupadas)
             {
                 if (!mesasOuComandas.Any(x => x.Codigo == item.Mesa!))
-                    mesasOuComandas.Add(AppState.MesasNaMemoria!.FirstOrDefault(x => x.Codigo == item.Mesa)!);
+                {
+                    if(AppState.MesasNaMemoria!.FirstOrDefault(x => x.Codigo == item.Mesa) is not null)
+                        mesasOuComandas.Add(AppState.MesasNaMemoria!.FirstOrDefault(x => x.Codigo == item.Mesa)!);
+                }
             }
 
             foreach (var mesa in mesasOuComandas!)
@@ -63,15 +66,26 @@ public partial class PageVerPedidos : ContentPage
                 }
                 else
                 {
-                    string NumeroComanda = Convert.ToInt32(mesa.Cartao).ToString();
-                    LblNumeroDeMesa.Text = NumeroComanda;
+                    bool NumeroComanda = int.TryParse(mesa.Cartao, out int result);
+                    string lblNumeroComanda = " ";
+
+                    if (NumeroComanda)
+                    {
+                        lblNumeroComanda = result.ToString();
+                    }
+                    else
+                    {
+                        lblNumeroComanda = mesa.Cartao!;
+                    }
+
+                    LblNumeroDeMesa.Text = lblNumeroComanda;
 
                     frame.Content = LblNumeroDeMesa;
                     frame.BackgroundColor = Color.Parse("#3B8112");
                     frame.BorderColor = Colors.Black;
                 }
 
-              
+
                 var MesaAtualOcupada = AppState.ContasNaMemoria!.Any(x => x.Mesa == mesa.Codigo);
 
                 if (MesaAtualOcupada)
@@ -84,7 +98,7 @@ public partial class PageVerPedidos : ContentPage
                         {
                             if (!String.IsNullOrEmpty(MesaNoContas.Cliente!.Trim()))
                             {
-                                NomeClienteCasoForBalcao = MesaNoContas.Cliente;    
+                                NomeClienteCasoForBalcao = MesaNoContas.Cliente;
                                 LblNumeroDeMesa.Text += $" / {MesaNoContas.Cliente}";
                             }
                         }
@@ -170,7 +184,7 @@ public partial class PageVerPedidos : ContentPage
         }
     }
 
-    private void ColocaInformacoesDeBalcao(string CodBalcao,string? NomeCliente)
+    private void ColocaInformacoesDeBalcao(string CodBalcao, string? NomeCliente)
     {
         AppState.EBalcao = true;
         AppState.BalcaoInfos.Repetido = true;

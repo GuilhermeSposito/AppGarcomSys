@@ -333,3 +333,4 @@ C:\SAAB\ProgAppGarcom\AppGarcomSys\AppGarcomSys\obj\Release\net8.0-ios\iossimula
 C:\SAAB\ProgAppGarcom\AppGarcomSys\AppGarcomSys\obj\Release\net8.0-ios\iossimulator-x64\AppGarcomSys.genruntimeconfig.cache
 C:\SAAB\ProgAppGarcom\AppGarcomSys\AppGarcomSys\obj\Release\net8.0-ios\iossimulator-x64\ref\AppGarcomSys.dll
 C:\SAAB\ProgAppGarcom\AppGarcomSys\AppGarcomSys\obj\Release\net8.0-ios\iossimulator-x64\mauiimage.outputs
+C:\SAAB\ProgAppGarcom\AppGarcomSys\AppGarcomSys\obj\Release\net8.0-ios\iossimulator-x64\build-signature\signature

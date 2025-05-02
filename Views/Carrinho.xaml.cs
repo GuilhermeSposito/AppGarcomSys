@@ -166,7 +166,7 @@ public partial class Carrinho : ContentPage
                         if (AppState.EBalcao)
                         {
                             entryDeComanda.IsVisible = false;
-                            lblComanda.Text = "Balc�o";
+                            lblComanda.Text = "Balcão";
                         }
                         else
                         {
@@ -178,7 +178,7 @@ public partial class Carrinho : ContentPage
                         if (AppState.EBalcao)
                         {
                             entryDeMesa.IsVisible = false;
-                            lblMesa.Text = "Balc�o";
+                            lblMesa.Text = "Balcão";
                         }
                         else
                         {
@@ -270,7 +270,7 @@ public partial class Carrinho : ContentPage
 
             if (!String.IsNullOrEmpty(produto.Requisicao))
             {
-                Label LbLRequsicaoProduto = new Label { Text = $"Requisi��o: {produto.Requisicao}", HorizontalTextAlignment = TextAlignment.Center, FontFamily = "OpenSansSemibold", TextColor = Color.Parse("#fff") };
+                Label LbLRequsicaoProduto = new Label { Text = $"Requisição: {produto.Requisicao}", HorizontalTextAlignment = TextAlignment.Center, FontFamily = "OpenSansSemibold", TextColor = Color.Parse("#fff") };
 
                 Grid.SetColumn(LbLRequsicaoProduto, 0);
                 Grid.SetRow(LbLRequsicaoProduto, 3);
@@ -365,7 +365,7 @@ public partial class Carrinho : ContentPage
 
             InputDeQtdProduto.Completed += (s, e) =>
             {
-                if (int.TryParse(InputDeQtdProduto.Text, out int qtd))
+                if (float.TryParse(InputDeQtdProduto.Text, out float qtd))
                 {
                     produto.Quantidade = qtd;
                 }
@@ -439,7 +439,7 @@ public partial class Carrinho : ContentPage
 
             bTnObs.Clicked += async (s, e) =>
             {
-                string resultado = await DisplayPromptAsync("Observa��o do produto", null, maxLength: 80, keyboard: Keyboard.Text, initialValue: produto.Observacao);
+                string resultado = await DisplayPromptAsync("Observação do produto", null, maxLength: 80, keyboard: Keyboard.Text, initialValue: produto.Observacao);
 
                 produto.Observacao = resultado;
 
@@ -475,7 +475,7 @@ public partial class Carrinho : ContentPage
             };
             BtnDeExcluirProduto.Clicked += async (s, e) =>
             {
-                var action = await DisplayActionSheet("Voc� deseja mesmo excluir esse produto do carrinho?", "Cancelar", null, "Sim", "N�o");
+                var action = await DisplayActionSheet("Você deseja mesmo excluir esse produto do carrinho?", "Cancelar", null, "Sim", "Não");
 
                 if (action == "Sim")
                 {
@@ -570,7 +570,7 @@ public partial class Carrinho : ContentPage
 
     private async void BtnCancelarPedido_Clicked(object sender, EventArgs e)
     {
-        var action = await DisplayActionSheet("Voc� deseja mesmo cancelar esse pedido?", "Cancelar", null, "Sim", "N�o");
+        var action = await DisplayActionSheet("Você deseja mesmo cancelar esse pedido?", "Cancelar", null, "Sim", "Não");
 
         if (action == "Sim")
         {
@@ -594,7 +594,7 @@ public partial class Carrinho : ContentPage
                 {
                     if (AppState.NumeroDaMesa == 0 && !AppState.EBalcao)
                     {
-                        throw new Exception("Informe o n�mero da mesa");
+                        throw new Exception("Informe o número da mesa");
                     }
                     else if (AppState.EBalcao == true) //aqui envia um pedido balc�o 
                     {
@@ -609,7 +609,7 @@ public partial class Carrinho : ContentPage
                 {
                     if (AppState.NumeroDaComanda is null || AppState.NumeroDaComanda == "000000" || AppState.NumeroDaComanda == "0" && !AppState.EBalcao)
                     {
-                        throw new Exception("Informe o n�mero da comanda");
+                        throw new Exception("Informe o número da comanda");
                     }
                     else if (!AppState.EBalcao)
                     {
@@ -619,7 +619,7 @@ public partial class Carrinho : ContentPage
                         {
                             if (Comanda.Bloqueado)
                             {
-                                throw new Exception("Comanda bloqueada, n�o � poss�vel enviar o pedido!");
+                                throw new Exception("Comanda bloqueada, não é possível enviar o pedido!");
                             }
                             else
                             {
@@ -667,7 +667,7 @@ public partial class Carrinho : ContentPage
 
                 if (!eBalcao && AppState.configuracaoDoApp.Comanda && !AppState.Repetido)
                 {
-                    var nome = await DisplayPromptAsync("Pedido de Comanda. Informe o nome�do�cliente:", null, "Ok", "N�o", null, maxLength: 30);
+                    var nome = await DisplayPromptAsync("Pedido de Comanda. Informe o nome do cliente:", null, "Ok", "Não", null, maxLength: 30);
                     if (nome is not null)
                         NomeCliente = nome;
                 }
@@ -675,7 +675,7 @@ public partial class Carrinho : ContentPage
                 {
                     if (!AppState.BalcaoInfos.Repetido)
                     {
-                        var nome = await DisplayPromptAsync("Pedido de Balc�o. Informe o nome�do�cliente:", null, "Ok", "N�o", null, maxLength: 30);
+                        var nome = await DisplayPromptAsync("Pedido de Balcão. Informe o nome do cliente:", null, "Ok", "Não", null, maxLength: 30);
 
                         AppState.BalcaoInfos.NomeCliente = nome;
                     }
