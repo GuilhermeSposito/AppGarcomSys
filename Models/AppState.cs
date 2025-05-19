@@ -58,14 +58,14 @@ public static class AppState
             else
             {
                 IpDoBanco = "192.168.0.1";
-                return "192.168.0.1";
+                return "192.168.0.0";
             }
         }
         catch (Exception ex)
         {
             Console.WriteLine(ex.ToString());
         }
-        return "192.168.0.1";
+        return "192.168.0.0";
     }
 
     public async static Task CarregaConfigsDeParametros()

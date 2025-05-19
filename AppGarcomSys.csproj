@@ -127,10 +127,4 @@
 	  </MauiXaml>
 	</ItemGroup>
 
-	<ItemGroup>
-	  <None Update=".gitignore">
-	    <Generator>SettingsSingleFileGenerator</Generator>
-	  </None>
-	</ItemGroup>
-
 </Project>

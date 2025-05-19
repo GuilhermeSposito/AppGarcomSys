@@ -15,7 +15,7 @@
             </HorizontalStackLayout>
             <Button x:Name="BtnDeEntrar" Clicked="BtnDeEntrar_Clicked" Text="Entrar" HorizontalOptions="Center" WidthRequest="200" />
 
-            <Label Text="Opções do Desenvolvedor" Margin="0,300,0,0" TextColor="Blue" HorizontalOptions="CenterAndExpand" TextDecorations="Underline">
+            <Label Text="Opções do Desenvolvedor" Margin="0,100,0,0" TextColor="Blue" HorizontalOptions="CenterAndExpand" TextDecorations="Underline">
                 <Label.GestureRecognizers>
                     <TapGestureRecognizer x:Name="ClickOpcDesenvolvedor" Tapped="ClickOpcDesenvolvedor_Tapped" />
                 </Label.GestureRecognizers>

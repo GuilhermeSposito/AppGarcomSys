@@ -28,6 +28,8 @@ public partial class GruposPage : ContentPage
                 AppState.GruposMemoria = await _gruposRepository.GetGrupos();
             }
 
+            AppState.GruposMemoria = AppState.GruposMemoria.OrderBy(grupo => grupo.Descricao).ToList();
+
             foreach (var grupo in AppState.GruposMemoria!)
             {
                 if (ContagemColuna > 1)

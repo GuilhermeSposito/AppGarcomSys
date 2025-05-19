@@ -10,9 +10,40 @@ public partial class Login : ContentPage
         InitializeComponent();
     }
 
-    protected  override void OnAppearing()
+    protected override async void OnAppearing()
     {
         base.OnAppearing();
+
+        await Task.Delay(100);
+
+        string? ConfigDoIP = await SecureStorage.GetAsync("IP");
+        if (String.IsNullOrEmpty(ConfigDoIP))
+        {
+            bool IpFoiInformado = true;
+
+            while (IpFoiInformado)
+            {
+                string TextoDigitado = await DisplayPromptAsync("IP não encontrado", "IP não foi encontrado na configuração, por favor informe ele aqui. \n \tExemplo: 192.168.0.5 (Não se esqueça dos pontos)", "OK", "Cancelar");
+
+                if (!String.IsNullOrEmpty(TextoDigitado))
+                {
+                    await SecureStorage.SetAsync("IP", TextoDigitado);
+                    AppState.IpDoBanco = TextoDigitado;
+                    IpFoiInformado = false;
+
+                    await AppState.CarregarConfigs()!;
+                    await AppState.CarregarGarcons();
+                    await AppState.CarregarGrupos();
+                    await AppState.CarregarProdutos();
+                    await AppState.CarregarMesas();
+                    await AppState.CarregarIncremento();
+                    await AppState.CarregarIncrementosCardapio();
+                    await AppState.CarregarContas();
+                    await AppState.CarregaConfigsDeParametros();
+                }
+            }
+           
+        }
     }
 
     protected override bool OnBackButtonPressed()
@@ -66,7 +97,7 @@ public partial class Login : ContentPage
             else
             {
                 AppState.Autorizado = false;
-                await DisplayAlert("Erro", "Usuario Não encontrado", "OK");              
+                await DisplayAlert("Erro", "Usuario Não encontrado", "OK");
             }
         }
         catch (Exception ex) when (ex.Message.Contains("Value cannot be null"))
