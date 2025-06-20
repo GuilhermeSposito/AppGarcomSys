@@ -46,6 +46,8 @@ public partial class EnviarAvisoPage : ContentPage
     {
         if (ApoioFrameDeFecharMesa == 0)
         {
+            BtnDownFecharMesa.IsVisible = false;
+
             LayoutDeMesasAbertas.Add(ActivityIndicator1);
             LayoutDeMesasAbertas.IsVisible = true;
 
@@ -82,8 +84,6 @@ public partial class EnviarAvisoPage : ContentPage
             await AppState.CarregarContas();
             await Task.Delay(2000);
 
-            ActivityIndicator1.IsRunning = false;
-            ActivityIndicator1.IsVisible = false;
 
             int ContagemColuna = 0;
             int ContagemDeLinhaReal = 0;
@@ -200,8 +200,10 @@ public partial class EnviarAvisoPage : ContentPage
                 ContagemColuna++;
             }
 
-            base.OnAppearing();
 
+            ActivityIndicator1.IsRunning = false;
+            ActivityIndicator1.IsVisible = false;
+            BtnDownFecharMesa.IsVisible = true;
         }
         catch (Exception ex)
         {
